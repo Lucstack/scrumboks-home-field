@@ -45,9 +45,9 @@ const Hero = () => {
             Word Lid
           </Button>
           <Button 
-            variant="outline" 
+            variant="default" 
             size="lg" 
-            className="border-white/30 text-white hover:bg-white/10 font-semibold px-8 py-4 text-lg hover-lift"
+            className="bg-accent hover:bg-accent-warm text-accent-foreground font-semibold px-8 py-4 text-lg hover-lift"
             onClick={scrollToContact}
           >
             Plan een Proeftraining
