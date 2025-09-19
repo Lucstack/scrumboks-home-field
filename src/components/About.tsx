@@ -31,7 +31,9 @@ const About = () => {
               </p>
 
               <p>
-                <em className="text-primary-navy">Plezier en passie.</em>
+                <strong className="text-primary-navy">
+                  Plezier en passie.
+                </strong>
                 De Scrumboks zijn meer dan een club. Hier beleef je rugby met
                 plezier, speel je met passie en bouw je mee aan een traditie die
                 al meer dan 50 jaar trots overeind staat.
