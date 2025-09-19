@@ -2,39 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* Scrumboks Rugby Club Design System
+All colors MUST be HSL. Navy blues with warm golden accents.
 */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
+    /* Rugby Navy & Golden Yellow Palette */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 215 25% 15%;
 
+    /* Rugby Navy Primary */
+    --primary: 215 45% 15%;
+    --primary-foreground: 0 0% 98%;
+    --primary-navy: 220 45% 12%;
+    --primary-navy-light: 215 35% 25%;
+    
+    /* Golden Yellow Accents */
+    --accent: 45 95% 65%;
+    --accent-warm: 42 85% 55%;
+    --accent-gold: 43 74% 49%;
+    --accent-foreground: 215 25% 15%;
+
+    /* Rugby Heritage Colors */
+    --heritage: 215 35% 25%;
+    --heritage-foreground: 0 0% 95%;
+    
+    /* Cards & Surfaces */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 215 25% 15%;
+    --card-warm: 45 15% 97%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 215 25% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --secondary: 220 15% 95%;
+    --secondary-foreground: 215 25% 15%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --muted: 220 15% 95%;
+    --muted-foreground: 215 15% 45%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Borders & Inputs */
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 45 95% 65%;
+    
+    /* Rugby-specific Colors */
+    --rugby-field: 120 40% 25%;
+    --rugby-field-light: 120 30% 35%;
+    
+    /* Gradients & Special Effects */
+    --gradient-navy: linear-gradient(135deg, hsl(var(--primary-navy)), hsl(var(--heritage)));
+    --gradient-warm: linear-gradient(135deg, hsl(var(--accent-warm)), hsl(var(--accent)));
+    --shadow-rugby: 0 10px 30px -10px hsl(var(--primary-navy) / 0.3);
+    --shadow-warm: 0 5px 20px -5px hsl(var(--accent) / 0.2);
 
     --radius: 0.5rem;
 
@@ -56,20 +82,24 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 215 45% 8%;
+    --foreground: 0 0% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 215 35% 12%;
+    --card-foreground: 0 0% 95%;
+    --card-warm: 215 25% 15%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 215 35% 12%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 45 95% 65%;
+    --primary-foreground: 215 45% 8%;
+    
+    --heritage: 215 25% 20%;
+    --heritage-foreground: 0 0% 90%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 215 25% 20%;
+    --secondary-foreground: 0 0% 95%;
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
@@ -101,5 +131,42 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto Slab', Georgia, serif;
+    font-weight: 600;
+  }
+
+  /* Rugby-specific utility classes */
+  .section-navy {
+    @apply bg-heritage text-heritage-foreground;
+  }
+  
+  .section-warm {
+    @apply bg-card-warm text-foreground;
+  }
+  
+  .text-rugby-tradition {
+    @apply text-accent-gold font-semibold;
+  }
+  
+  .shadow-rugby {
+    box-shadow: var(--shadow-rugby);
+  }
+  
+  .shadow-warm {
+    box-shadow: var(--shadow-warm);
+  }
+  
+  /* Parallax and smooth animations */
+  .parallax-hero {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+  
+  .hover-lift {
+    @apply transition-all duration-300 hover:translate-y-[-4px] hover:shadow-rugby;
   }
 }

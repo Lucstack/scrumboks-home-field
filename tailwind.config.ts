@@ -22,6 +22,8 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          navy: "hsl(var(--primary-navy))",
+          "navy-light": "hsl(var(--primary-navy-light))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -38,6 +40,16 @@ export default {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+          warm: "hsl(var(--accent-warm))",
+          gold: "hsl(var(--accent-gold))",
+        },
+        heritage: {
+          DEFAULT: "hsl(var(--heritage))",
+          foreground: "hsl(var(--heritage-foreground))",
+        },
+        rugby: {
+          field: "hsl(var(--rugby-field))",
+          "field-light": "hsl(var(--rugby-field-light))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -46,6 +58,7 @@ export default {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+          warm: "hsl(var(--card-warm))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -57,6 +70,18 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      fontFamily: {
+        'heading': ['Roboto Slab', 'Georgia', 'serif'],
+        'body': ['Inter', 'system-ui', 'sans-serif'],
+      },
+      backgroundImage: {
+        'gradient-navy': 'var(--gradient-navy)',
+        'gradient-warm': 'var(--gradient-warm)',
+      },
+      boxShadow: {
+        'rugby': 'var(--shadow-rugby)',
+        'warm': 'var(--shadow-warm)',
       },
       borderRadius: {
         lg: "var(--radius)",
