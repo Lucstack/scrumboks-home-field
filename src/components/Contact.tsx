@@ -1,11 +1,19 @@
-import { useState } from "react";
-import { MapPin, Mail, Phone, Clock, Facebook, Instagram, Twitter } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent } from "@/components/ui/card";
-import { useToast } from "@/hooks/use-toast";
-import clubhouse from "@/assets/clubhouse.jpg";
+import { useState } from 'react';
+import {
+  MapPin,
+  Mail,
+  Phone,
+  Clock,
+  Facebook,
+  Instagram,
+  Twitter,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Card, CardContent } from '@/components/ui/card';
+import { useToast } from '@/hooks/use-toast';
+import clubhouse from '@/assets/clubhouse.jpg';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -13,7 +21,7 @@ const Contact = () => {
     email: '',
     phone: '',
     subject: '',
-    message: ''
+    message: '',
   });
   const { toast } = useToast();
 
@@ -21,46 +29,56 @@ const Contact = () => {
     e.preventDefault();
     // Simulate form submission
     toast({
-      title: "Bericht verzonden!",
-      description: "We nemen zo snel mogelijk contact met je op.",
+      title: 'Bericht verzonden!',
+      description: 'We nemen zo snel mogelijk contact met je op.',
     });
     setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData(prev => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
   const contactInfo = [
     {
       icon: MapPin,
-      title: "Adres",
-      details: ["Beethovenstraat 18a", "4003 KX Tiel"]
+      title: 'Adres',
+      details: ['Beethovenstraat 18a', '4003 KX Tiel'],
     },
     {
       icon: Mail,
-      title: "E-mail",
-      details: ["info@scrumboks.nl"]
+      title: 'E-mail',
+      details: ['info@scrumboks.nl'],
     },
     {
       icon: Phone,
-      title: "Telefoon Clubhuis",
-      details: ["0344 623201"]
+      title: 'Telefoon Clubhuis',
+      details: ['0344 623201'],
     },
     {
       icon: Clock,
-      title: "Trainingstijden",
-      details: ["Di–Do 18:45–20:30", "Vr 20:00–22:00"]
-    }
+      title: 'Trainingstijden',
+      details: ['Di & Do 18:45 - 20:30', 'Vr 20:00 - 22:00'],
+    },
   ];
 
   const socialLinks = [
-    { icon: Facebook, href: "#", label: "Facebook" },
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Twitter, href: "#", label: "Twitter" }
+    {
+      icon: Facebook,
+      href: 'https://www.facebook.com/Scrumboks/',
+      label: 'Facebook',
+    },
+    {
+      icon: Instagram,
+      href: 'https://www.instagram.com/scrumboks_rugby/',
+      label: 'Instagram',
+    },
+    { icon: Twitter, href: 'https://x.com/scrumboks', label: 'Twitter' },
   ];
 
   return (
@@ -70,17 +88,17 @@ const Contact = () => {
           <div className="inline-block px-4 py-2 bg-accent/20 rounded-full border border-accent/30 mb-6">
             <span className="text-accent font-semibold">Contact</span>
           </div>
-          
+
           <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6 text-white">
             Kom Langs en
             <span className="block text-accent">Maak Kennis</span>
           </h2>
-          
+
           <p className="text-xl text-heritage-foreground/80 max-w-2xl mx-auto">
             Vragen? Interesse in een proeftraining? We horen graag van je!
           </p>
         </div>
-        
+
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Form */}
           <Card className="bg-white/95 border-none shadow-warm">
@@ -88,11 +106,14 @@ const Contact = () => {
               <h3 className="text-2xl font-heading font-bold text-primary-navy mb-6">
                 Stuur ons een bericht
               </h3>
-              
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-semibold text-primary-navy mb-2">
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-semibold text-primary-navy mb-2"
+                    >
                       Naam *
                     </label>
                     <Input
@@ -105,7 +126,10 @@ const Contact = () => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-semibold text-primary-navy mb-2">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-semibold text-primary-navy mb-2"
+                    >
                       E-mail *
                     </label>
                     <Input
@@ -119,10 +143,13 @@ const Contact = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-semibold text-primary-navy mb-2">
+                    <label
+                      htmlFor="phone"
+                      className="block text-sm font-semibold text-primary-navy mb-2"
+                    >
                       Telefoon
                     </label>
                     <Input
@@ -134,7 +161,10 @@ const Contact = () => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-semibold text-primary-navy mb-2">
+                    <label
+                      htmlFor="subject"
+                      className="block text-sm font-semibold text-primary-navy mb-2"
+                    >
                       Onderwerp
                     </label>
                     <Input
@@ -146,9 +176,12 @@ const Contact = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div>
-                  <label htmlFor="message" className="block text-sm font-semibold text-primary-navy mb-2">
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-semibold text-primary-navy mb-2"
+                  >
                     Bericht *
                   </label>
                   <Textarea
@@ -162,10 +195,10 @@ const Contact = () => {
                     placeholder="Vertel ons waar je interesse in hebt..."
                   />
                 </div>
-                
-                <Button 
-                  type="submit" 
-                  size="lg" 
+
+                <Button
+                  type="submit"
+                  size="lg"
                   className="w-full bg-accent hover:bg-accent-warm text-accent-foreground font-semibold hover-lift"
                 >
                   Verstuur Bericht
@@ -173,14 +206,14 @@ const Contact = () => {
               </form>
             </CardContent>
           </Card>
-          
+
           {/* Contact Info & Clubhouse */}
           <div className="space-y-8">
             {/* Clubhouse Image */}
             <div className="relative rounded-2xl overflow-hidden shadow-rugby">
-              <img 
-                src={clubhouse} 
-                alt="Rugby Club de Scrumboks clubhuis" 
+              <img
+                src={clubhouse}
+                alt="Rugby Club de Scrumboks clubhuis"
                 className="w-full h-64 object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary-navy/60 to-transparent"></div>
@@ -189,20 +222,28 @@ const Contact = () => {
                 <p className="text-sm opacity-90">Het hart van de Scrumboks</p>
               </div>
             </div>
-            
+
             {/* Contact Information */}
             <div className="grid sm:grid-cols-2 gap-4">
               {contactInfo.map((info, index) => (
-                <Card key={index} className="bg-white/10 backdrop-blur-sm border-accent/20">
+                <Card
+                  key={index}
+                  className="bg-white/10 backdrop-blur-sm border-accent/20"
+                >
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
                       <div className="bg-accent/20 p-2 rounded-lg">
                         <info.icon className="w-5 h-5 text-accent" />
                       </div>
                       <div>
-                        <h4 className="font-semibold text-white mb-1">{info.title}</h4>
+                        <h4 className="font-semibold text-white mb-1">
+                          {info.title}
+                        </h4>
                         {info.details.map((detail, i) => (
-                          <p key={i} className="text-sm text-heritage-foreground/80">
+                          <p
+                            key={i}
+                            className="text-sm text-heritage-foreground/80"
+                          >
                             {detail}
                           </p>
                         ))}
@@ -212,7 +253,7 @@ const Contact = () => {
                 </Card>
               ))}
             </div>
-            
+
             {/* Social Media */}
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
               <h4 className="font-heading font-bold text-white mb-4 text-center">

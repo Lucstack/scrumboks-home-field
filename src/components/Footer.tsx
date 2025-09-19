@@ -1,4 +1,4 @@
-import { MapPin, Mail, Phone } from "lucide-react";
+import { MapPin, Mail, Phone } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -11,13 +11,12 @@ const Footer = () => {
               Rugby Club de Scrumboks
             </h3>
             <p className="text-heritage-foreground/80 leading-relaxed mb-4">
-              50+ jaar rugby traditie in Tiel. Een hechte community waar rugby en vriendschap centraal staan.
+              50 jaar rugby traditie in Tiel. Een hechte community waar rugby en
+              vriendschap centraal staat.
             </p>
-            <div className="text-accent-warm font-semibold">
-              Sinds 1970
-            </div>
+            <div className="text-accent-warm font-semibold">Sinds 1976</div>
           </div>
-          
+
           {/* Quick Contact */}
           <div>
             <h4 className="font-heading font-bold mb-4">Contact</h4>
@@ -42,7 +41,7 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Training Times */}
           <div>
             <h4 className="font-heading font-bold mb-4">Trainingstijden</h4>
@@ -57,7 +56,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="border-t border-white/10 mt-8 pt-8 text-center">
           <p className="text-heritage-foreground/60 text-sm">
             © 2024 Rugby Club de Scrumboks. Alle rechten voorbehouden.
