@@ -47,7 +47,6 @@ const Footer = () => {
             <h4 className="font-heading font-bold mb-4">Trainingstijden</h4>
             <div className="space-y-2 text-sm text-heritage-foreground/80">
               <div>Dinsdag: 18:45 - 20:30</div>
-              <div>Woensdag: 18:45 - 20:30</div>
               <div>Donderdag: 18:45 - 20:30</div>
               <div>Vrijdag: 20:00 - 22:00</div>
             </div>
