@@ -2,7 +2,7 @@ import { Building2, Handshake, Trophy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
-const Sponsors = () => {
+const Sponsors = ({ id }: { id?: string }) => {
   const sponsorBenefits = [
     {
       icon: Building2,
@@ -24,7 +24,7 @@ const Sponsors = () => {
   ];
 
   return (
-    <section className="py-20 section-warm">
+    <section id={id} className="py-20 section-warm">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <div className="inline-block px-4 py-2 bg-accent/10 rounded-full border border-accent/20 mb-6">

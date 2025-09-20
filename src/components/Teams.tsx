@@ -1,7 +1,7 @@
 import { Users, Clock, Calendar } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
-const Teams = () => {
+const Teams = ({ id }: { id?: string }) => {
   const teams = [
     {
       name: 'Senioren',

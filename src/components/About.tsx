@@ -1,8 +1,8 @@
 import teamCelebration from '@/assets/team-celebration.jpg';
 
-const About = () => {
+const About = ({ id }: { id?: string }) => {
   return (
-    <section className="py-20 section-warm">
+    <section id={id} className="py-20 section-warm">
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
