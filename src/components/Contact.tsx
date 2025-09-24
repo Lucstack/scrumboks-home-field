@@ -40,7 +40,13 @@ const Contact = ({ id }: { id?: string }) => {
           title: "Bericht verzonden!",
           description: "We nemen zo snel mogelijk contact met je op.",
         });
-        setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        });
       } else {
         throw new Error(result.error || "Failed to send email");
       }
