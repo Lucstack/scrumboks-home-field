@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import clubhouseInterior2 from "@/assets/clubhouse-interior2.jpg";
+import clubhouseInterior3 from "@/assets/clubhouse-interior3.jpg";
 
 const Contact = ({ id }: { id?: string }) => {
   const [formData, setFormData] = useState({
@@ -227,7 +227,7 @@ const Contact = ({ id }: { id?: string }) => {
             {/* Clubhouse Image */}
             <div className="relative rounded-2xl overflow-hidden shadow-rugby">
               <img
-                src={clubhouseInterior2}
+                src={clubhouseInterior3}
                 alt="Rugby Club de Scrumboks clubhuis"
                 className="w-full h-64 object-cover object-top"
                 loading="lazy"

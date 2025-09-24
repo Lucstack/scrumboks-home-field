@@ -8,7 +8,7 @@ import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
 const SponsorsPage = () => {
   useScrollToTop(); // Scroll naar top bij laden van deze pagina
-  
+
   const sponsorPackages = [
     {
       name: "Scrum Master",

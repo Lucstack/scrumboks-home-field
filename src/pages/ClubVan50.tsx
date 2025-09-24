@@ -10,7 +10,7 @@ import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
 const ClubVan50 = () => {
   useScrollToTop(); // Scroll naar top bij laden van deze pagina
-  
+
   const [formData, setFormData] = useState({
     naam: "",
     telefoon: "",
