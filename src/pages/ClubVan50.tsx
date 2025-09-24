@@ -13,9 +13,9 @@ const ClubVan50 = () => {
 
   const [formData, setFormData] = useState({
     naam: "",
-    telefoon: "",
     email: "",
-    weergavenaam: "",
+    telefoon: "",
+    extraTekst: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -32,7 +32,7 @@ const ClubVan50 = () => {
       alert(
         "Aanmelding ontvangen! We nemen contact met je op voor de details."
       );
-      setFormData({ naam: "", telefoon: "", email: "", weergavenaam: "" });
+      setFormData({ naam: "", email: "", telefoon: "", extraTekst: "" });
     } catch (error) {
       alert("Er is iets misgegaan. Probeer het later opnieuw.");
     }
@@ -144,7 +144,7 @@ const ClubVan50 = () => {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="space-y-2">
                     <Label htmlFor="naam" className="text-white font-medium">
-                      Volledige Naam *
+                      Naam *
                     </Label>
                     <Input
                       id="naam"
@@ -155,7 +155,24 @@ const ClubVan50 = () => {
                         setFormData({ ...formData, naam: e.target.value })
                       }
                       className="bg-white/20 border-white/30 text-white placeholder:text-white/60"
-                      placeholder="Jouw volledige naam"
+                      placeholder="Je volledige naam"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-white font-medium">
+                      Email *
+                    </Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
+                      className="bg-white/20 border-white/30 text-white placeholder:text-white/60"
+                      placeholder="je.email@voorbeeld.nl"
                     />
                   </div>
 
@@ -164,7 +181,7 @@ const ClubVan50 = () => {
                       htmlFor="telefoon"
                       className="text-white font-medium"
                     >
-                      Telefoonnummer *
+                      Telefoon *
                     </Label>
                     <Input
                       id="telefoon"
@@ -180,45 +197,27 @@ const ClubVan50 = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="text-white font-medium">
-                      E-mailadres *
-                    </Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
-                      className="bg-white/20 border-white/30 text-white placeholder:text-white/60"
-                      placeholder="jouw@email.nl"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
                     <Label
-                      htmlFor="weergavenaam"
+                      htmlFor="extraTekst"
                       className="text-white font-medium"
                     >
-                      Weergavenaam voor Club van 50 Bord
+                      Extra tekst onder je naam (optioneel)
                     </Label>
                     <Input
-                      id="weergavenaam"
+                      id="extraTekst"
                       type="text"
-                      value={formData.weergavenaam}
+                      value={formData.extraTekst}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          weergavenaam: e.target.value,
+                          extraTekst: e.target.value,
                         })
                       }
                       className="bg-white/20 border-white/30 text-white placeholder:text-white/60"
-                      placeholder="Zoals je wilt verschijnen op het bord"
+                      placeholder="Bijv. bedrijf, organisatie, functie of an"
                     />
                     <p className="text-sm text-heritage-foreground/60">
-                      Optioneel: Als je dit leeg laat, gebruiken we je volledige
-                      naam
+                      Deze tekst verschijnt onder je naam op het Club van 50 bord en op de website
                     </p>
                   </div>
 
@@ -227,7 +226,7 @@ const ClubVan50 = () => {
                     size="lg"
                     className="w-full bg-accent hover:bg-accent-warm text-accent-foreground font-semibold"
                   >
-                    Aanmelden voor Club van 50
+                    Word Lid van Club van 50
                   </Button>
                 </form>
               </CardContent>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Building2, Handshake, Trophy, Crown, Zap, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -5,9 +6,11 @@ import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
+import SponsorSelection from "@/components/SponsorSelection";
 
 const SponsorsPage = () => {
   useScrollToTop(); // Scroll naar top bij laden van deze pagina
+  const [showSponsorSelection, setShowSponsorSelection] = useState(false);
 
   const sponsorPackages = [
     {
@@ -197,6 +200,7 @@ const SponsorsPage = () => {
                         ? "bg-accent hover:bg-accent-warm text-accent-foreground"
                         : "bg-white/20 hover:bg-white/30 text-white border border-white/30"
                     }`}
+                    onClick={() => setShowSponsorSelection(true)}
                   >
                     Kies {pkg.name}
                   </Button>
@@ -256,9 +260,8 @@ const SponsorsPage = () => {
                 Neem Contact Op
               </Button>
               <Button
-                variant="outline"
                 size="lg"
-                className="border-white/30 text-white hover:bg-white/10 font-semibold px-8"
+                className="bg-accent hover:bg-accent-warm text-accent-foreground font-semibold px-8"
                 onClick={() => {
                   // TODO: Implementeer brochure download
                   alert("Brochure download komt binnenkort beschikbaar!");
@@ -272,6 +275,13 @@ const SponsorsPage = () => {
       </section>
 
       <Footer />
+      
+      {showSponsorSelection && (
+        <SponsorSelection
+          packages={sponsorPackages}
+          onClose={() => setShowSponsorSelection(false)}
+        />
+      )}
     </div>
   );
 };

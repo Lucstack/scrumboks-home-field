@@ -38,9 +38,17 @@ const Navigation = () => {
   const scrollToSection = (href: string) => {
     if (href.startsWith("/#")) {
       const sectionId = href.substring(2);
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+      
+      // Check if we're on the homepage
+      if (location.pathname === "/") {
+        // On homepage: smooth scroll to section
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      } else {
+        // On other pages: navigate to homepage with hash
+        window.location.href = `/#${sectionId}`;
       }
     }
     setIsOpen(false);
