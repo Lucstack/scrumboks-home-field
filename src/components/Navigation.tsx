@@ -43,7 +43,7 @@ const Navigation = () => {
         location.pathname === "/" ||
         location.pathname === "/scrumboks-home-field/" ||
         location.pathname.endsWith("/scrumboks-home-field");
-      
+
       if (isHomepage) {
         // On homepage: scroll to top
         window.scrollTo({ top: 0, behavior: "smooth" });

@@ -11,8 +11,12 @@ const Hero = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image with Parallax */}
       <div
-        className="absolute inset-0 bg-cover bg-left bg-no-repeat parallax-hero"
-        style={{ backgroundImage: `url(${rugbyHero})` }}
+        className="absolute inset-0 bg-cover bg-no-repeat parallax-hero"
+        style={{ 
+          backgroundImage: `url(${rugbyHero})`,
+          backgroundPosition: '40% center',
+          backgroundSize: '110% auto'
+        }}
       >
         <div className="absolute inset-0 bg-primary-navy/70"></div>
       </div>
