@@ -25,14 +25,29 @@ const Contact = ({ id }: { id?: string }) => {
   });
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    toast({
-      title: "Bericht verzonden!",
-      description: "We nemen zo snel mogelijk contact met je op.",
-    });
-    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+    
+    try {
+      // TODO: Implementeer echte form submission
+      // Voor nu: simulatie met betere feedback
+      console.log('Contact form submitted:', formData);
+      
+      // Simuleer API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      toast({
+        title: "Bericht verzonden!",
+        description: "We nemen zo snel mogelijk contact met je op.",
+      });
+      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+    } catch (error) {
+      toast({
+        title: "Fout bij verzenden",
+        description: "Er is iets misgegaan. Probeer het later opnieuw.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleInputChange = (

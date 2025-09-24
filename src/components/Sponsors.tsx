@@ -100,6 +100,14 @@ const Sponsors = ({ id }: { id?: string }) => {
             variant="default"
             size="lg"
             className="bg-accent hover:bg-accent-warm text-accent-foreground font-semibold px-8 py-4 text-lg hover-lift"
+            onClick={() => {
+              const contactSection = document.getElementById('contact');
+              if (contactSection) {
+                contactSection.scrollIntoView({ behavior: 'smooth' });
+              } else {
+                window.location.href = '/#contact';
+              }
+            }}
           >
             Neem Contact Op
           </Button>

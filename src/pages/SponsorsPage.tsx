@@ -232,6 +232,14 @@ const SponsorsPage = () => {
               <Button
                 size="lg"
                 className="bg-accent hover:bg-accent-warm text-accent-foreground font-semibold px-8"
+                onClick={() => {
+                  const contactSection = document.getElementById('contact');
+                  if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth' });
+                  } else {
+                    window.location.href = '/#contact';
+                  }
+                }}
               >
                 Neem Contact Op
               </Button>
@@ -239,6 +247,10 @@ const SponsorsPage = () => {
                 variant="outline"
                 size="lg"
                 className="border-white/30 text-white hover:bg-white/10 font-semibold px-8"
+                onClick={() => {
+                  // TODO: Implementeer brochure download
+                  alert('Brochure download komt binnenkort beschikbaar!');
+                }}
               >
                 Download Brochure
               </Button>

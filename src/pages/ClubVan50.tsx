@@ -15,10 +15,22 @@ const ClubVan50 = () => {
     weergavenaam: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
+    
+    try {
+      // TODO: Implementeer echte form submission
+      // Voor nu: simulatie met betere feedback
+      console.log('Club van 50 form submitted:', formData);
+      
+      // Simuleer API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      alert('Aanmelding ontvangen! We nemen contact met je op voor de details.');
+      setFormData({ naam: '', telefoon: '', email: '', weergavenaam: '' });
+    } catch (error) {
+      alert('Er is iets misgegaan. Probeer het later opnieuw.');
+    }
   };
 
   const benefits = [
