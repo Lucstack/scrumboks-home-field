@@ -5,6 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { sendSponsorEmail } from "@/lib/email-service";
+import { useToast } from "@/hooks/use-toast";
 
 interface SponsorPackage {
   name: string;
@@ -21,15 +23,16 @@ interface SponsorSelectionProps {
 }
 
 const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
+  const { toast } = useToast();
   const [selectedPackage, setSelectedPackage] = useState<SponsorPackage | null>(
     null
   );
   const [formData, setFormData] = useState({
-    bedrijfsnaam: "",
-    contactpersoon: "",
+    companyName: "",
+    contactPerson: "",
     email: "",
-    telefoon: "",
-    omschrijving: "",
+    phone: "",
+    description: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,15 +41,28 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
     try {
       console.log("Sponsor aanvraag:", { selectedPackage, formData });
 
-      // Simuleer API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Send email via SMTP
+      const result = await sendSponsorEmail({
+        ...formData,
+        selectedPackage: selectedPackage?.name || "",
+      });
 
-      alert(
-        `Aanvraag voor ${selectedPackage?.name} pakket ontvangen! We nemen contact met je op.`
-      );
-      onClose();
+      if (result.success) {
+        toast({
+          title: "Aanvraag ontvangen!",
+          description: `Aanvraag voor ${selectedPackage?.name} pakket ontvangen! We nemen contact met je op.`,
+        });
+        onClose();
+      } else {
+        throw new Error(result.error || "Failed to send email");
+      }
     } catch (error) {
-      alert("Er is iets misgegaan. Probeer het later opnieuw.");
+      console.error("Sponsor form error:", error);
+      toast({
+        title: "Fout bij verzenden",
+        description: "Er is iets misgegaan. Probeer het later opnieuw.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -164,30 +180,30 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="bedrijfsnaam" className="font-medium">
+                <Label htmlFor="companyName" className="font-medium">
                   Bedrijfsnaam *
                 </Label>
                 <Input
-                  id="bedrijfsnaam"
+                  id="companyName"
                   required
-                  value={formData.bedrijfsnaam}
+                  value={formData.companyName}
                   onChange={(e) =>
-                    setFormData({ ...formData, bedrijfsnaam: e.target.value })
+                    setFormData({ ...formData, companyName: e.target.value })
                   }
                   placeholder="Jouw bedrijfsnaam"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="contactpersoon" className="font-medium">
+                <Label htmlFor="contactPerson" className="font-medium">
                   Contactpersoon *
                 </Label>
                 <Input
-                  id="contactpersoon"
+                  id="contactPerson"
                   required
-                  value={formData.contactpersoon}
+                  value={formData.contactPerson}
                   onChange={(e) =>
-                    setFormData({ ...formData, contactpersoon: e.target.value })
+                    setFormData({ ...formData, contactPerson: e.target.value })
                   }
                   placeholder="Jouw naam"
                 />
@@ -212,16 +228,16 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="telefoon" className="font-medium">
+                <Label htmlFor="phone" className="font-medium">
                   Telefoon *
                 </Label>
                 <Input
-                  id="telefoon"
+                  id="phone"
                   type="tel"
                   required
-                  value={formData.telefoon}
+                  value={formData.phone}
                   onChange={(e) =>
-                    setFormData({ ...formData, telefoon: e.target.value })
+                    setFormData({ ...formData, phone: e.target.value })
                   }
                   placeholder="06-12345678"
                 />
@@ -229,14 +245,14 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="omschrijving" className="font-medium">
+              <Label htmlFor="description" className="font-medium">
                 Omschrijving (optioneel)
               </Label>
               <Textarea
-                id="omschrijving"
-                value={formData.omschrijving}
+                id="description"
+                value={formData.description}
                 onChange={(e) =>
-                  setFormData({ ...formData, omschrijving: e.target.value })
+                  setFormData({ ...formData, description: e.target.value })
                 }
                 placeholder="Vertel ons iets over je bedrijf of waarom je wilt sponsoren..."
                 rows={3}

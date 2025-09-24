@@ -7,9 +7,12 @@ import { Label } from "@/components/ui/label";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
+import { sendClub50Email } from "@/lib/email-service";
+import { useToast } from "@/hooks/use-toast";
 
 const ClubVan50 = () => {
   useScrollToTop(); // Scroll naar top bij laden van deze pagina
+  const { toast } = useToast();
 
   const [formData, setFormData] = useState({
     naam: "",
@@ -22,19 +25,27 @@ const ClubVan50 = () => {
     e.preventDefault();
 
     try {
-      // TODO: Implementeer echte form submission
-      // Voor nu: simulatie met betere feedback
       console.log("Club van 50 form submitted:", formData);
 
-      // Simuleer API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Send email via SMTP
+      const result = await sendClub50Email(formData);
 
-      alert(
-        "Aanmelding ontvangen! We nemen contact met je op voor de details."
-      );
-      setFormData({ naam: "", email: "", telefoon: "", extraTekst: "" });
+      if (result.success) {
+        toast({
+          title: "Aanmelding ontvangen!",
+          description: "We nemen contact met je op voor de details.",
+        });
+        setFormData({ naam: "", email: "", telefoon: "", extraTekst: "" });
+      } else {
+        throw new Error(result.error || "Failed to send email");
+      }
     } catch (error) {
-      alert("Er is iets misgegaan. Probeer het later opnieuw.");
+      console.error("Club van 50 form error:", error);
+      toast({
+        title: "Fout bij verzenden",
+        description: "Er is iets misgegaan. Probeer het later opnieuw.",
+        variant: "destructive",
+      });
     }
   };
 

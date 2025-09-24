@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { sendContactEmail } from "@/lib/email-service";
 import clubhouseInterior from "@/assets/clubhouse-interior.jpg";
 
 const Contact = ({ id }: { id?: string }) => {
@@ -29,19 +30,22 @@ const Contact = ({ id }: { id?: string }) => {
     e.preventDefault();
 
     try {
-      // TODO: Implementeer echte form submission
-      // Voor nu: simulatie met betere feedback
       console.log("Contact form submitted:", formData);
 
-      // Simuleer API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Send email via SMTP
+      const result = await sendContactEmail(formData);
 
-      toast({
-        title: "Bericht verzonden!",
-        description: "We nemen zo snel mogelijk contact met je op.",
-      });
-      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+      if (result.success) {
+        toast({
+          title: "Bericht verzonden!",
+          description: "We nemen zo snel mogelijk contact met je op.",
+        });
+        setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+      } else {
+        throw new Error(result.error || "Failed to send email");
+      }
     } catch (error) {
+      console.error("Contact form error:", error);
       toast({
         title: "Fout bij verzenden",
         description: "Er is iets misgegaan. Probeer het later opnieuw.",

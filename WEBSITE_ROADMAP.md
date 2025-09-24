@@ -36,7 +36,9 @@ Deze website is ontwikkeld voor **Rugby Club de Scrumboks Tiel** met als hoofddo
 - [x] **Error handling** toegevoegd
 - [x] **Success messages** verbeterd
 - [x] **Club van 50 formulier** - aangepast naar gewenste velden (naam, email, telefoon, extraTekst)
-- [ ] **Echte backend integratie** - email service implementeren
+- [x] **SMTP email service** - Gmail SMTP geïmplementeerd
+- [x] **Email routing** - Contact → info@scrumboks.nl, Club van 50/Sponsoren → sponsorzaken@scrumboks.nl
+- [ ] **Formulieren testen** - na volledige Gmail migratie testen
 
 ### **Pagina's Completeren**
 
