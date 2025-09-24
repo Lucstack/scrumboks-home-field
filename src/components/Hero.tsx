@@ -14,7 +14,7 @@ const Hero = () => {
         className="absolute inset-0 bg-cover bg-no-repeat parallax-hero"
         style={{
           backgroundImage: `url(${rugbyHero})`,
-          backgroundPosition: "30% center",
+          backgroundPosition: "38% center",
           backgroundSize: "cover",
         }}
       >
