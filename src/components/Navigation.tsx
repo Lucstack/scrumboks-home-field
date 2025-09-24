@@ -38,8 +38,19 @@ const Navigation = () => {
 
   const scrollToSection = (href: string) => {
     if (href === "/") {
-      // Home button clicked - scroll to top
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      // Home button clicked
+      const isHomepage =
+        location.pathname === "/" ||
+        location.pathname === "/scrumboks-home-field/" ||
+        location.pathname.endsWith("/scrumboks-home-field");
+      
+      if (isHomepage) {
+        // On homepage: scroll to top
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        // On other pages: navigate to homepage
+        navigate("/");
+      }
     } else if (href.startsWith("/#")) {
       const sectionId = href.substring(2);
 
