@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import rugbyHero3 from "@/assets/rugby-hero3.jpg";
+import rugbyHero from "@/assets/rugby-hero.jpg";
 
 const Hero = () => {
   const scrollToContact = () => {
@@ -11,7 +11,7 @@ const Hero = () => {
       {/* Background Image with Parallax */}
       <div
         className="absolute inset-0 bg-cover bg-right bg-no-repeat parallax-hero"
-        style={{ backgroundImage: `url(${rugbyHero3})` }}
+        style={{ backgroundImage: `url(${rugbyHero})` }}
       >
         <div className="absolute inset-0 bg-primary-navy/70"></div>
       </div>
