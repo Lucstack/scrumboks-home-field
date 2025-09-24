@@ -12,10 +12,10 @@ const Hero = () => {
       {/* Background Image with Parallax */}
       <div
         className="absolute inset-0 bg-cover bg-no-repeat parallax-hero"
-        style={{ 
+        style={{
           backgroundImage: `url(${rugbyHero})`,
-          backgroundPosition: '40% center',
-          backgroundSize: '110% auto'
+          backgroundPosition: "40% center",
+          backgroundSize: "cover",
         }}
       >
         <div className="absolute inset-0 bg-primary-navy/70"></div>
