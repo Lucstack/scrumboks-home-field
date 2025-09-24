@@ -1,25 +1,25 @@
-import { Building2, Handshake, Trophy } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Building2, Handshake, Trophy } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 const Sponsors = ({ id }: { id?: string }) => {
   const sponsorBenefits = [
     {
       icon: Building2,
-      title: 'Zichtbaarheid',
+      title: "Zichtbaarheid",
       description:
-        'Logo op shirts, website, en clubmateriaal voor maximale exposure',
+        "Logo op shirts, website, en clubmateriaal voor maximale exposure",
     },
     {
       icon: Handshake,
-      title: 'Community',
+      title: "Community",
       description:
-        'Directe verbinding met een hechte lokale gemeenschap van rugbyliefhebbers',
+        "Directe verbinding met een hechte lokale gemeenschap van rugbyliefhebbers",
     },
     {
       icon: Trophy,
-      title: 'Traditie',
-      description: 'Steun een club met 50 jaar traditie en groeiende ambities',
+      title: "Traditie",
+      description: "Steun een club met 50 jaar traditie en groeiende ambities",
     },
   ];
 
@@ -101,11 +101,11 @@ const Sponsors = ({ id }: { id?: string }) => {
             size="lg"
             className="bg-accent hover:bg-accent-warm text-accent-foreground font-semibold px-8 py-4 text-lg hover-lift"
             onClick={() => {
-              const contactSection = document.getElementById('contact');
+              const contactSection = document.getElementById("contact");
               if (contactSection) {
-                contactSection.scrollIntoView({ behavior: 'smooth' });
+                contactSection.scrollIntoView({ behavior: "smooth" });
               } else {
-                window.location.href = '/#contact';
+                window.location.href = "/#contact";
               }
             }}
           >

@@ -1,16 +1,18 @@
-import { useLocation, Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Home, ArrowLeft } from 'lucide-react';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
+import { useLocation, Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Home, ArrowLeft } from "lucide-react";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
 const NotFound = () => {
+  useScrollToTop(); // Scroll naar top bij laden van deze pagina
   const location = useLocation();
 
   useEffect(() => {
     console.error(
-      '404 Error: User attempted to access non-existent route:',
+      "404 Error: User attempted to access non-existent route:",
       location.pathname
     );
   }, [location.pathname]);
@@ -18,7 +20,7 @@ const NotFound = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
-      
+
       <div className="flex min-h-[80vh] items-center justify-center section-warm">
         <div className="text-center max-w-2xl mx-auto px-6">
           <div className="mb-8">
@@ -37,16 +39,25 @@ const NotFound = () => {
             <p className="text-muted-foreground">
               Probeer een van deze opties:
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-accent hover:bg-accent-warm text-accent-foreground">
+              <Button
+                asChild
+                size="lg"
+                className="bg-accent hover:bg-accent-warm text-accent-foreground"
+              >
                 <Link to="/">
                   <Home className="w-4 h-4 mr-2" />
                   Terug naar Home
                 </Link>
               </Button>
-              
-              <Button asChild variant="outline" size="lg" onClick={() => window.history.back()}>
+
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                onClick={() => window.history.back()}
+              >
                 <button>
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Ga Terug
@@ -60,26 +71,38 @@ const NotFound = () => {
               Populaire Pagina's
             </h3>
             <div className="flex flex-wrap gap-2 justify-center">
-              <Link to="/#teams" className="text-accent hover:text-accent-warm font-medium">
+              <Link
+                to="/#teams"
+                className="text-accent hover:text-accent-warm font-medium"
+              >
                 Teams
               </Link>
               <span className="text-muted-foreground">•</span>
-              <Link to="/#contact" className="text-accent hover:text-accent-warm font-medium">
+              <Link
+                to="/#contact"
+                className="text-accent hover:text-accent-warm font-medium"
+              >
                 Contact
               </Link>
               <span className="text-muted-foreground">•</span>
-              <Link to="/club-van-50" className="text-accent hover:text-accent-warm font-medium">
+              <Link
+                to="/club-van-50"
+                className="text-accent hover:text-accent-warm font-medium"
+              >
                 Club van 50
               </Link>
               <span className="text-muted-foreground">•</span>
-              <Link to="/sponsoren" className="text-accent hover:text-accent-warm font-medium">
+              <Link
+                to="/sponsoren"
+                className="text-accent hover:text-accent-warm font-medium"
+              >
                 Sponsoren
               </Link>
             </div>
           </div>
         </div>
       </div>
-      
+
       <Footer />
     </div>
   );

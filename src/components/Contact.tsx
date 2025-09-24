@@ -27,15 +27,15 @@ const Contact = ({ id }: { id?: string }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       // TODO: Implementeer echte form submission
       // Voor nu: simulatie met betere feedback
-      console.log('Contact form submitted:', formData);
-      
+      console.log("Contact form submitted:", formData);
+
       // Simuleer API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       toast({
         title: "Bericht verzonden!",
         description: "We nemen zo snel mogelijk contact met je op.",

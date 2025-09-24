@@ -28,6 +28,7 @@ const Navigation = () => {
   }, [lastScrollY]);
 
   const menuItems = [
+    { name: 'Home', href: '/' },
     { name: 'Teams', href: '/#teams' },
     { name: 'Contact', href: '/#contact' },
     { name: 'Club van 50', href: '/club-van-50' },
