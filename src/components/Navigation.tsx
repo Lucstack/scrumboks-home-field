@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
@@ -8,6 +8,7 @@ const Navigation = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const controlNavbar = () => {
@@ -36,19 +37,38 @@ const Navigation = () => {
   ];
 
   const scrollToSection = (href: string) => {
+    console.log("🔍 scrollToSection called with:", href);
+    console.log("🔍 Current pathname:", location.pathname);
+    
     if (href.startsWith("/#")) {
       const sectionId = href.substring(2);
+      console.log("🔍 Section ID:", sectionId);
+
+      // Check if we're on the homepage (account for Vite base path)
+      const isHomepage = location.pathname === "/" || location.pathname === "/scrumboks-home-field/" || location.pathname.endsWith("/scrumboks-home-field");
+      console.log("🔍 Is homepage:", isHomepage);
       
-      // Check if we're on the homepage
-      if (location.pathname === "/") {
+      if (isHomepage) {
         // On homepage: smooth scroll to section
         const element = document.getElementById(sectionId);
+        console.log("🔍 Element found:", !!element);
         if (element) {
           element.scrollIntoView({ behavior: "smooth" });
+        } else {
+          // Element not found, try after a short delay
+          console.log("🔍 Element not found, trying delayed search...");
+          setTimeout(() => {
+            const delayedElement = document.getElementById(sectionId);
+            console.log("🔍 Delayed element found:", !!delayedElement);
+            if (delayedElement) {
+              delayedElement.scrollIntoView({ behavior: "smooth" });
+            }
+          }, 100);
         }
       } else {
         // On other pages: navigate to homepage with hash
-        window.location.href = `/#${sectionId}`;
+        console.log("🔍 Navigating to homepage with hash:", `/#${sectionId}`);
+        navigate(`/#${sectionId}`);
       }
     }
     setIsOpen(false);

@@ -21,7 +21,9 @@ interface SponsorSelectionProps {
 }
 
 const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
-  const [selectedPackage, setSelectedPackage] = useState<SponsorPackage | null>(null);
+  const [selectedPackage, setSelectedPackage] = useState<SponsorPackage | null>(
+    null
+  );
   const [formData, setFormData] = useState({
     bedrijfsnaam: "",
     contactpersoon: "",
@@ -32,14 +34,16 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       console.log("Sponsor aanvraag:", { selectedPackage, formData });
-      
+
       // Simuleer API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      
-      alert(`Aanvraag voor ${selectedPackage?.name} pakket ontvangen! We nemen contact met je op.`);
+
+      alert(
+        `Aanvraag voor ${selectedPackage?.name} pakket ontvangen! We nemen contact met je op.`
+      );
       onClose();
     } catch (error) {
       alert("Er is iets misgegaan. Probeer het later opnieuw.");
@@ -85,15 +89,15 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
                         Meest Populair
                       </div>
                     )}
-                    
+
                     <div className="bg-accent/10 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <pkg.icon className="w-8 h-8 text-accent-gold" />
                     </div>
-                    
+
                     <h3 className="text-xl font-heading font-bold text-primary-navy mb-2">
                       {pkg.name}
                     </h3>
-                    
+
                     <div className="mb-4">
                       <div className="text-2xl font-heading font-bold text-accent">
                         {pkg.price}
@@ -102,12 +106,14 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
                         {pkg.period}
                       </div>
                     </div>
-                    
+
                     <ul className="space-y-2 text-sm text-left mb-4">
                       {pkg.features.slice(0, 3).map((feature, i) => (
                         <li key={i} className="flex items-start">
                           <div className="w-1.5 h-1.5 bg-accent rounded-full mr-2 mt-2 flex-shrink-0"></div>
-                          <span className="text-muted-foreground">{feature}</span>
+                          <span className="text-muted-foreground">
+                            {feature}
+                          </span>
                         </li>
                       ))}
                       {pkg.features.length > 3 && (
@@ -116,7 +122,7 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
                         </li>
                       )}
                     </ul>
-                    
+
                     <Button className="w-full bg-accent hover:bg-accent-warm text-accent-foreground">
                       Kies {pkg.name}
                     </Button>
@@ -165,7 +171,9 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
                   id="bedrijfsnaam"
                   required
                   value={formData.bedrijfsnaam}
-                  onChange={(e) => setFormData({ ...formData, bedrijfsnaam: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, bedrijfsnaam: e.target.value })
+                  }
                   placeholder="Jouw bedrijfsnaam"
                 />
               </div>
@@ -178,7 +186,9 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
                   id="contactpersoon"
                   required
                   value={formData.contactpersoon}
-                  onChange={(e) => setFormData({ ...formData, contactpersoon: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, contactpersoon: e.target.value })
+                  }
                   placeholder="Jouw naam"
                 />
               </div>
@@ -194,7 +204,9 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
                   type="email"
                   required
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                   placeholder="contact@bedrijf.nl"
                 />
               </div>
@@ -208,7 +220,9 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
                   type="tel"
                   required
                   value={formData.telefoon}
-                  onChange={(e) => setFormData({ ...formData, telefoon: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, telefoon: e.target.value })
+                  }
                   placeholder="06-12345678"
                 />
               </div>
@@ -221,7 +235,9 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
               <Textarea
                 id="omschrijving"
                 value={formData.omschrijving}
-                onChange={(e) => setFormData({ ...formData, omschrijving: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, omschrijving: e.target.value })
+                }
                 placeholder="Vertel ons iets over je bedrijf of waarom je wilt sponsoren..."
                 rows={3}
               />

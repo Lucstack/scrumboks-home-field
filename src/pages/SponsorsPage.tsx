@@ -275,7 +275,7 @@ const SponsorsPage = () => {
       </section>
 
       <Footer />
-      
+
       {showSponsorSelection && (
         <SponsorSelection
           packages={sponsorPackages}

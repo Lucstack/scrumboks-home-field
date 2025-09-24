@@ -217,7 +217,8 @@ const ClubVan50 = () => {
                       placeholder="Bijv. bedrijf, organisatie, functie of an"
                     />
                     <p className="text-sm text-heritage-foreground/60">
-                      Deze tekst verschijnt onder je naam op het Club van 50 bord en op de website
+                      Deze tekst verschijnt onder je naam op het Club van 50
+                      bord en op de website
                     </p>
                   </div>
 
