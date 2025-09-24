@@ -54,7 +54,7 @@ const Teams = ({ id }: { id?: string }) => {
   ];
 
   return (
-    <section className="py-20 section-navy relative overflow-hidden">
+    <section id={id} className="py-20 section-navy relative overflow-hidden">
       {/* Subtle decorative background */}
       <div 
         className="absolute inset-0 opacity-5 bg-cover bg-center bg-no-repeat"
