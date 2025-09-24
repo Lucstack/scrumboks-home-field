@@ -214,7 +214,7 @@ const Contact = ({ id }: { id?: string }) => {
               <img
                 src={clubhouseInterior}
                 alt="Rugby Club de Scrumboks clubhuis"
-                className="w-full h-64 object-cover"
+                className="w-full h-64 object-cover object-top"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary-navy/60 to-transparent"></div>
