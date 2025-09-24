@@ -9,7 +9,7 @@ import { useHashScroll } from "@/hooks/use-hash-scroll";
 
 const Index = () => {
   useHashScroll(); // Handle hash scrolling when navigating from other pages
-  
+
   return (
     <div className="min-h-screen">
       <Navigation />
