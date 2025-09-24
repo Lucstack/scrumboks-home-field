@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   MapPin,
   Mail,
@@ -7,21 +7,21 @@ import {
   Facebook,
   Instagram,
   Twitter,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent } from '@/components/ui/card';
-import { useToast } from '@/hooks/use-toast';
-import clubhouseInterior from '@/assets/clubhouse-interior.jpg';
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
+import clubhouseInterior2 from "@/assets/clubhouse-interior2.jpg";
 
 const Contact = ({ id }: { id?: string }) => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: '',
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
   });
   const { toast } = useToast();
 
@@ -29,16 +29,16 @@ const Contact = ({ id }: { id?: string }) => {
     e.preventDefault();
     // Simulate form submission
     toast({
-      title: 'Bericht verzonden!',
-      description: 'We nemen zo snel mogelijk contact met je op.',
+      title: "Bericht verzonden!",
+      description: "We nemen zo snel mogelijk contact met je op.",
     });
-    setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
   };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -47,38 +47,38 @@ const Contact = ({ id }: { id?: string }) => {
   const contactInfo = [
     {
       icon: MapPin,
-      title: 'Adres',
-      details: ['Beethovenstraat 18a', '4003 KX Tiel'],
+      title: "Adres",
+      details: ["Beethovenstraat 18a", "4003 KX Tiel"],
     },
     {
       icon: Mail,
-      title: 'E-mail',
-      details: ['info@scrumboks.nl'],
+      title: "E-mail",
+      details: ["info@scrumboks.nl"],
     },
     {
       icon: Phone,
-      title: 'Telefoon Clubhuis',
-      details: ['0344 623201'],
+      title: "Telefoon Clubhuis",
+      details: ["0344 623201"],
     },
     {
       icon: Clock,
-      title: 'Trainingstijden',
-      details: ['Di & Do 18:45 - 20:30', 'Vr 20:00 - 22:00'],
+      title: "Trainingstijden",
+      details: ["Di & Do 18:45 - 20:30", "Vr 20:00 - 22:00"],
     },
   ];
 
   const socialLinks = [
     {
       icon: Facebook,
-      href: 'https://www.facebook.com/Scrumboks/',
-      label: 'Facebook',
+      href: "https://www.facebook.com/Scrumboks/",
+      label: "Facebook",
     },
     {
       icon: Instagram,
-      href: 'https://www.instagram.com/scrumboks_rugby/',
-      label: 'Instagram',
+      href: "https://www.instagram.com/scrumboks_rugby/",
+      label: "Instagram",
     },
-    { icon: Twitter, href: 'https://x.com/scrumboks', label: 'Twitter' },
+    { icon: Twitter, href: "https://x.com/scrumboks", label: "Twitter" },
   ];
 
   return (
@@ -212,7 +212,7 @@ const Contact = ({ id }: { id?: string }) => {
             {/* Clubhouse Image */}
             <div className="relative rounded-2xl overflow-hidden shadow-rugby">
               <img
-                src={clubhouseInterior}
+                src={clubhouseInterior2}
                 alt="Rugby Club de Scrumboks clubhuis"
                 className="w-full h-64 object-cover object-top"
                 loading="lazy"
