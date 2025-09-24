@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import rugbyHero from "@/assets/rugby-hero.jpg";
 
 const Hero = () => {
-  // Force cache refresh
+  // Force cache refresh - updated for GitHub Pages
   const scrollToContact = () => {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
