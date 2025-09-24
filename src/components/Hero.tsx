@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import rugbyHero from "@/assets/rugby-hero.jpg";
 
 const Hero = () => {
+  // Force cache refresh
   const scrollToContact = () => {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
