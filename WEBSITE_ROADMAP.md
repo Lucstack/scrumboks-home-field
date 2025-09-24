@@ -124,6 +124,7 @@ Deze website is ontwikkeld voor **Rugby Club de Scrumboks Tiel** met als hoofddo
 ## 🎉 **Voltooide Features**
 
 ### **Navigatie & UX**
+
 - ✅ Volledig werkende navigatie (Home, Teams, Contact, Club van 50, Sponsoren)
 - ✅ Smooth scroll tussen secties op homepage
 - ✅ Cross-page navigatie met automatische scroll naar juiste sectie
@@ -131,12 +132,14 @@ Deze website is ontwikkeld voor **Rugby Club de Scrumboks Tiel** met als hoofddo
 - ✅ Professionele 404 pagina
 
 ### **Formulieren & Interactie**
+
 - ✅ Contact formulier met validatie en feedback
 - ✅ Club van 50 formulier met gewenste velden
 - ✅ Sponsor selectie systeem met contact formulier
 - ✅ Alle buttons hebben consistente styling
 
 ### **Content & Design**
+
 - ✅ Hero foto toont team genoten (linker kant)
 - ✅ Clubhuis foto geïmplementeerd
 - ✅ Sponsor pakketen met interactieve selectie

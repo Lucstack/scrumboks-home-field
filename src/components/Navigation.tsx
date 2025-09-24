@@ -37,7 +37,10 @@ const Navigation = () => {
   ];
 
   const scrollToSection = (href: string) => {
-    if (href.startsWith("/#")) {
+    if (href === "/") {
+      // Home button clicked - scroll to top
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (href.startsWith("/#")) {
       const sectionId = href.substring(2);
 
       // Check if we're on the homepage (account for Vite base path)
@@ -90,7 +93,7 @@ const Navigation = () => {
           <div className="absolute top-full right-0 mt-2 w-48 bg-white/95 backdrop-blur-md rounded-xl border border-white/20 shadow-rugby overflow-hidden">
             {menuItems.map((item) => (
               <div key={item.name}>
-                {item.href.startsWith("/#") ? (
+                {item.href === "/" || item.href.startsWith("/#") ? (
                   <button
                     onClick={() => scrollToSection(item.href)}
                     className="w-full px-4 py-3 text-left font-medium text-primary-navy hover:bg-accent/10 transition-colors"
@@ -130,7 +133,7 @@ const Navigation = () => {
             <div className="flex flex-col items-center justify-center h-full space-y-8 -mt-20">
               {menuItems.map((item) => (
                 <div key={item.name}>
-                  {item.href.startsWith("/#") ? (
+                  {item.href === "/" || item.href.startsWith("/#") ? (
                     <button
                       onClick={() => scrollToSection(item.href)}
                       className="text-2xl font-heading font-bold text-white hover:text-accent transition-colors"
