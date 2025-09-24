@@ -1,5 +1,6 @@
 import { Users, Clock, Calendar } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import scrumAction from '@/assets/scrum-action.jpg';
 
 const Teams = ({ id }: { id?: string }) => {
   const teams = [
@@ -53,8 +54,13 @@ const Teams = ({ id }: { id?: string }) => {
   ];
 
   return (
-    <section className="py-20 section-navy">
-      <div className="container mx-auto px-6">
+    <section className="py-20 section-navy relative overflow-hidden">
+      {/* Subtle decorative background */}
+      <div 
+        className="absolute inset-0 opacity-5 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${scrumAction})` }}
+      ></div>
+      <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
           <div className="inline-block px-4 py-2 bg-accent/20 rounded-full border border-accent/30 mb-6">
             <span className="text-accent font-semibold">Onze Teams</span>

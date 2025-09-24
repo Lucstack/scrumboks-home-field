@@ -1,4 +1,4 @@
-import teamCelebration from '@/assets/team-celebration.jpg';
+import teamHuddle from '@/assets/team-huddle.jpg';
 
 const About = ({ id }: { id?: string }) => {
   return (
@@ -71,9 +71,10 @@ const About = ({ id }: { id?: string }) => {
           <div className="relative">
             <div className="relative rounded-2xl overflow-hidden shadow-rugby">
               <img
-                src={teamCelebration}
-                alt="Team celebration - Rugby Club de Scrumboks"
+                src={teamHuddle}
+                alt="Team huddle - Rugby Club de Scrumboks"
                 className="w-full h-auto object-cover"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary-navy/20 to-transparent"></div>
             </div>
