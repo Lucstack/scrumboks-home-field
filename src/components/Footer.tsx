@@ -1,4 +1,5 @@
 import { MapPin, Mail, Phone } from 'lucide-react';
+import logo from '@/assets/RC_De_Scrumboks (1).png';
 
 const Footer = () => {
   return (
@@ -56,10 +57,17 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-white/10 mt-8 pt-8 text-center">
-          <p className="text-heritage-foreground/60 text-sm">
-            © 2024 Rugby Club de Scrumboks. Alle rechten voorbehouden.
-          </p>
+        <div className="border-t border-white/10 mt-8 pt-8">
+          <div className="flex items-center justify-center gap-4">
+            <p className="text-heritage-foreground/60 text-sm">
+              © 2025 Rugby Club de Scrumboks. Alle rechten voorbehouden.
+            </p>
+            <img
+              src={logo}
+              alt="Rugby Club de Scrumboks Logo"
+              className="h-12 w-auto"
+            />
+          </div>
         </div>
       </div>
     </footer>

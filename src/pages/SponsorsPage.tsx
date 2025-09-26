@@ -1,12 +1,14 @@
-import { useState } from "react";
-import { Building2, Handshake, Trophy, Crown, Zap, Heart } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
-import { useScrollToTop } from "@/hooks/use-scroll-to-top";
-import SponsorSelection from "@/components/SponsorSelection";
+import { useState } from 'react';
+import { Building2, Handshake, Trophy, Crown, Zap, Heart } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
+import { useScrollToTop } from '@/hooks/use-scroll-to-top';
+import SponsorSelection from '@/components/SponsorSelection';
+import teamCelebration from '@/assets/team-celebration.jpg';
+import teamCelebration2 from '@/assets/team-celebration-2.jpeg';
 
 const SponsorsPage = () => {
   useScrollToTop(); // Scroll naar top bij laden van deze pagina
@@ -14,43 +16,43 @@ const SponsorsPage = () => {
 
   const sponsorPackages = [
     {
-      name: "Scrum Master",
+      name: 'Scrum Master',
       icon: Crown,
-      price: "€2.500",
-      period: "per jaar",
+      price: '€2.500',
+      period: 'per jaar',
       features: [
-        "Logo op alle shirts en trainingskleding",
-        "Prominente vermelding op website homepage",
-        "Naamsvermelding tijdens wedstrijden",
-        "VIP toegang tot thuiswedstrijden",
-        "4 vrijkaarten per wedstrijd",
-        "Jaarlijks sponsordiner",
+        'Logo op alle shirts en trainingskleding',
+        'Prominente vermelding op website homepage',
+        'Naamsvermelding tijdens wedstrijden',
+        'VIP toegang tot thuiswedstrijden',
+        '4 vrijkaarten per wedstrijd',
+        'Jaarlijks sponsordiner',
       ],
       highlight: true,
     },
     {
-      name: "Line-out Leader",
+      name: 'Line-out Leader',
       icon: Zap,
-      price: "€1.500",
-      period: "per jaar",
+      price: '€1.500',
+      period: 'per jaar',
       features: [
-        "Logo op trainingsshirts",
-        "Vermelding op website sponsor pagina",
-        "Social media posts",
-        "2 vrijkaarten per wedstrijd",
-        "Uitnodiging sponsordiner",
+        'Logo op trainingsshirts',
+        'Vermelding op website sponsor pagina',
+        'Social media posts',
+        '2 vrijkaarten per wedstrijd',
+        'Uitnodiging sponsordiner',
       ],
     },
     {
-      name: "Team Player",
+      name: 'Team Player',
       icon: Heart,
-      price: "€750",
-      period: "per jaar",
+      price: '€750',
+      period: 'per jaar',
       features: [
-        "Logo op clubmateriaal",
-        "Vermelding op website",
-        "Nieuwsbrief vermelding",
-        "1 vrijkaart per wedstrijd",
+        'Logo op clubmateriaal',
+        'Vermelding op website',
+        'Nieuwsbrief vermelding',
+        '1 vrijkaart per wedstrijd',
       ],
     },
   ];
@@ -58,19 +60,19 @@ const SponsorsPage = () => {
   const benefits = [
     {
       icon: Building2,
-      title: "Zichtbaarheid",
+      title: 'Zichtbaarheid',
       description:
-        "Bereik een actieve en betrokken lokale gemeenschap van rugbyliefhebbers",
+        'Bereik een actieve en betrokken lokale gemeenschap van rugbyliefhebbers',
     },
     {
       icon: Handshake,
-      title: "Netwerken",
-      description: "Directe verbinding met lokale ondernemers en professionals",
+      title: 'Netwerken',
+      description: 'Directe verbinding met lokale ondernemers en professionals',
     },
     {
       icon: Trophy,
-      title: "Traditie & Groei",
-      description: "Investeer in 50 jaar traditie met groeiende ambities",
+      title: 'Traditie & Groei',
+      description: 'Investeer in 50 jaar traditie met groeiende ambities',
     },
   ];
 
@@ -139,8 +141,13 @@ const SponsorsPage = () => {
       </section>
 
       {/* Packages Section */}
-      <section className="py-20 section-navy">
-        <div className="container mx-auto px-6">
+      <section className="py-20 section-navy relative overflow-hidden">
+        {/* Subtle decorative background */}
+        <div
+          className="absolute inset-0 opacity-5 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${teamCelebration2})` }}
+        ></div>
+        <div className="container mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-heading font-bold text-white mb-6">
               Sponsorpakketten
@@ -155,7 +162,7 @@ const SponsorsPage = () => {
               <Card
                 key={index}
                 className={`bg-white/10 backdrop-blur-sm border-white/20 hover-lift ${
-                  pkg.highlight ? "ring-2 ring-accent scale-105" : ""
+                  pkg.highlight ? 'ring-2 ring-accent scale-105' : ''
                 }`}
               >
                 <CardContent className="p-8 text-center">
@@ -197,8 +204,8 @@ const SponsorsPage = () => {
                     size="lg"
                     className={`w-full font-semibold ${
                       pkg.highlight
-                        ? "bg-accent hover:bg-accent-warm text-accent-foreground"
-                        : "bg-white/20 hover:bg-white/30 text-white border border-white/30"
+                        ? 'bg-accent hover:bg-accent-warm text-accent-foreground'
+                        : 'bg-white/20 hover:bg-white/30 text-white border border-white/30'
                     }`}
                     onClick={() => setShowSponsorSelection(true)}
                   >
@@ -249,11 +256,11 @@ const SponsorsPage = () => {
                 size="lg"
                 className="bg-accent hover:bg-accent-warm text-accent-foreground font-semibold px-8"
                 onClick={() => {
-                  const contactSection = document.getElementById("contact");
+                  const contactSection = document.getElementById('contact');
                   if (contactSection) {
-                    contactSection.scrollIntoView({ behavior: "smooth" });
+                    contactSection.scrollIntoView({ behavior: 'smooth' });
                   } else {
-                    window.location.href = "/#contact";
+                    window.location.href = '/#contact';
                   }
                 }}
               >
@@ -264,7 +271,7 @@ const SponsorsPage = () => {
                 className="bg-accent hover:bg-accent-warm text-accent-foreground font-semibold px-8"
                 onClick={() => {
                   // TODO: Implementeer brochure download
-                  alert("Brochure download komt binnenkort beschikbaar!");
+                  alert('Brochure download komt binnenkort beschikbaar!');
                 }}
               >
                 Download Brochure

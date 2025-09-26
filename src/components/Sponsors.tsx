@@ -1,25 +1,26 @@
-import { Building2, Handshake, Trophy } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Building2, Handshake, Trophy } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import youthTeam from '@/assets/youth-rugby-upp.jpeg';
 
 const Sponsors = ({ id }: { id?: string }) => {
   const sponsorBenefits = [
     {
       icon: Building2,
-      title: "Zichtbaarheid",
+      title: 'Zichtbaarheid',
       description:
-        "Logo op shirts, website, en clubmateriaal voor maximale exposure",
+        'Logo op shirts, website, en clubmateriaal voor maximale exposure',
     },
     {
       icon: Handshake,
-      title: "Community",
+      title: 'Community',
       description:
-        "Directe verbinding met een hechte lokale gemeenschap van rugbyliefhebbers",
+        'Directe verbinding met een hechte lokale gemeenschap van rugbyliefhebbers',
     },
     {
       icon: Trophy,
-      title: "Traditie",
-      description: "Steun een club met 50 jaar traditie en groeiende ambities",
+      title: 'Traditie',
+      description: 'Steun een club met 50 jaar traditie en groeiende ambities',
     },
   ];
 
@@ -66,51 +67,58 @@ const Sponsors = ({ id }: { id?: string }) => {
           ))}
         </div>
 
-        <div className="bg-heritage rounded-3xl p-8 md:p-12 text-center">
-          <h3 className="text-3xl font-heading font-bold text-white mb-6">
-            Word Partner van de Scrumboks
-          </h3>
+        <div className="bg-heritage rounded-3xl p-8 md:p-12 text-center relative overflow-hidden">
+          {/* Subtle decorative background */}
+          <div
+            className="absolute inset-0 opacity-10 bg-cover bg-center bg-no-repeat rounded-3xl"
+            style={{ backgroundImage: `url(${youthTeam})` }}
+          ></div>
+          <div className="relative z-10">
+            <h3 className="text-3xl font-heading font-bold text-white mb-6">
+              Word Partner van de Scrumboks
+            </h3>
 
-          <p className="text-heritage-foreground/80 text-lg mb-8 max-w-2xl mx-auto">
-            We zoeken bedrijven die net als wij geloven in teamwork, respect en
-            groei. Samen kunnen we nog meer bereiken voor onze club en
-            gemeenschap.
-          </p>
+            <p className="text-heritage-foreground/80 text-lg mb-8 max-w-2xl mx-auto">
+              We zoeken bedrijven die net als wij geloven in teamwork, respect
+              en groei. Samen kunnen we nog meer bereiken voor onze club en
+              gemeenschap.
+            </p>
 
-          <div className="grid sm:grid-cols-2 gap-6 max-w-lg mx-auto mb-8">
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-              <div className="text-2xl font-heading font-bold text-accent">
-                150+
+            <div className="grid sm:grid-cols-2 gap-6 max-w-lg mx-auto mb-8">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                <div className="text-2xl font-heading font-bold text-accent">
+                  150+
+                </div>
+                <div className="text-sm text-heritage-foreground/80">
+                  Actieve Leden
+                </div>
               </div>
-              <div className="text-sm text-heritage-foreground/80">
-                Actieve Leden
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                <div className="text-2xl font-heading font-bold text-accent">
+                  6
+                </div>
+                <div className="text-sm text-heritage-foreground/80">
+                  Teams Alle Leeftijden
+                </div>
               </div>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-              <div className="text-2xl font-heading font-bold text-accent">
-                6
-              </div>
-              <div className="text-sm text-heritage-foreground/80">
-                Teams Alle Leeftijden
-              </div>
-            </div>
+
+            <Button
+              variant="default"
+              size="lg"
+              className="bg-accent hover:bg-accent-warm text-accent-foreground font-semibold px-8 py-4 text-lg hover-lift"
+              onClick={() => {
+                const contactSection = document.getElementById('contact');
+                if (contactSection) {
+                  contactSection.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                  window.location.href = '/#contact';
+                }
+              }}
+            >
+              Neem Contact Op
+            </Button>
           </div>
-
-          <Button
-            variant="default"
-            size="lg"
-            className="bg-accent hover:bg-accent-warm text-accent-foreground font-semibold px-8 py-4 text-lg hover-lift"
-            onClick={() => {
-              const contactSection = document.getElementById("contact");
-              if (contactSection) {
-                contactSection.scrollIntoView({ behavior: "smooth" });
-              } else {
-                window.location.href = "/#contact";
-              }
-            }}
-          >
-            Neem Contact Op
-          </Button>
         </div>
 
         {/* Future sponsor logos section */}

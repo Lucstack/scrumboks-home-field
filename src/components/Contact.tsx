@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   MapPin,
   Mail,
@@ -7,55 +7,79 @@ import {
   Facebook,
   Instagram,
   Twitter,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent } from "@/components/ui/card";
-import { useToast } from "@/hooks/use-toast";
-import { sendContactEmail } from "@/lib/email-service";
-import clubhouseInterior from "@/assets/clubhouse-interior.jpg";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Card, CardContent } from '@/components/ui/card';
+import { useToast } from '@/hooks/use-toast';
+import { sendContactEmail } from '@/lib/email-service';
+import { isValidEmail, isValidPhone } from '@/lib/validation';
+import clubhouseInterior from '@/assets/clubhouse-interior.jpg';
+import teamCelebration from '@/assets/team-celebration.jpg';
+import clubhouse from '@/assets/clubhouse.jpg';
+import teamGathering from '@/assets/team-gathering.jpeg';
 
 const Contact = ({ id }: { id?: string }) => {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: "",
+    name: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: '',
   });
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Validate email
+    if (!isValidEmail(formData.email)) {
+      toast({
+        title: 'Ongeldig email adres',
+        description: 'Controleer je email adres en probeer opnieuw.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    // Validate phone if provided
+    if (formData.phone && !isValidPhone(formData.phone)) {
+      toast({
+        title: 'Ongeldig telefoonnummer',
+        description: 'Voer een geldig telefoonnummer in (minimaal 10 cijfers).',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     try {
-      console.log("Contact form submitted:", formData);
+      console.log('Contact form submitted:', formData);
 
       // Send email via SMTP
       const result = await sendContactEmail(formData);
 
       if (result.success) {
         toast({
-          title: "Bericht verzonden!",
-          description: "We nemen zo snel mogelijk contact met je op.",
+          title: 'Bericht verzonden!',
+          description: 'We nemen zo snel mogelijk contact met je op.',
         });
         setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          subject: "",
-          message: "",
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: '',
         });
       } else {
-        throw new Error(result.error || "Failed to send email");
+        throw new Error(result.error || 'Failed to send email');
       }
     } catch (error) {
-      console.error("Contact form error:", error);
+      console.error('Contact form error:', error);
       toast({
-        title: "Fout bij verzenden",
-        description: "Er is iets misgegaan. Probeer het later opnieuw.",
-        variant: "destructive",
+        title: 'Fout bij verzenden',
+        description: 'Er is iets misgegaan. Probeer het later opnieuw.',
+        variant: 'destructive',
       });
     }
   };
@@ -63,7 +87,7 @@ const Contact = ({ id }: { id?: string }) => {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -72,43 +96,51 @@ const Contact = ({ id }: { id?: string }) => {
   const contactInfo = [
     {
       icon: MapPin,
-      title: "Adres",
-      details: ["Beethovenstraat 18a", "4003 KX Tiel"],
+      title: 'Adres',
+      details: ['Beethovenstraat 18a', '4003 KX Tiel'],
     },
     {
       icon: Mail,
-      title: "E-mail",
-      details: ["info@scrumboks.nl"],
+      title: 'E-mail',
+      details: ['info@scrumboks.nl'],
     },
     {
       icon: Phone,
-      title: "Telefoon Clubhuis",
-      details: ["0344 623201"],
+      title: 'Telefoon Clubhuis',
+      details: ['0344 623201'],
     },
     {
       icon: Clock,
-      title: "Trainingstijden",
-      details: ["Di & Do 18:45 - 20:30", "Vr 20:00 - 22:00"],
+      title: 'Trainingstijden',
+      details: ['Di & Do 18:45 - 20:30', 'Vr 20:00 - 22:00'],
     },
   ];
 
   const socialLinks = [
     {
       icon: Facebook,
-      href: "https://www.facebook.com/Scrumboks/",
-      label: "Facebook",
+      href: 'https://www.facebook.com/Scrumboks/',
+      label: 'Facebook',
     },
     {
       icon: Instagram,
-      href: "https://www.instagram.com/scrumboks_rugby/",
-      label: "Instagram",
+      href: 'https://www.instagram.com/scrumboks_rugby/',
+      label: 'Instagram',
     },
-    { icon: Twitter, href: "https://x.com/scrumboks", label: "Twitter" },
+    { icon: Twitter, href: 'https://x.com/scrumboks', label: 'Twitter' },
   ];
 
   return (
-    <section id={id || 'contact'} className="py-20 section-navy">
-      <div className="container mx-auto px-6">
+    <section
+      id={id || 'contact'}
+      className="py-20 section-navy relative overflow-hidden"
+    >
+      {/* Subtle decorative background */}
+      <div
+        className="absolute inset-0 opacity-5 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${teamGathering})` }}
+      ></div>
+      <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
           <div className="inline-block px-4 py-2 bg-accent/20 rounded-full border border-accent/30 mb-6">
             <span className="text-accent font-semibold">Contact</span>
@@ -132,7 +164,7 @@ const Contact = ({ id }: { id?: string }) => {
                 Stuur ons een bericht
               </h3>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label

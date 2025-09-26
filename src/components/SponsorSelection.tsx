@@ -1,12 +1,13 @@
-import { useState } from "react";
-import { Crown, Zap, Heart, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { sendSponsorEmail } from "@/lib/email-service";
-import { useToast } from "@/hooks/use-toast";
+import { useState } from 'react';
+import { Crown, Zap, Heart, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { sendSponsorEmail } from '@/lib/email-service';
+import { useToast } from '@/hooks/use-toast';
+import { isValidEmail, isValidPhone } from '@/lib/validation';
 
 interface SponsorPackage {
   name: string;
@@ -28,40 +29,60 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
     null
   );
   const [formData, setFormData] = useState({
-    companyName: "",
-    contactPerson: "",
-    email: "",
-    phone: "",
-    description: "",
+    companyName: '',
+    contactPerson: '',
+    email: '',
+    phone: '',
+    description: '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Validate email
+    if (!isValidEmail(formData.email)) {
+      toast({
+        title: 'Ongeldig email adres',
+        description: 'Controleer je email adres en probeer opnieuw.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    // Validate phone if provided
+    if (formData.phone && !isValidPhone(formData.phone)) {
+      toast({
+        title: 'Ongeldig telefoonnummer',
+        description: 'Voer een geldig telefoonnummer in (minimaal 10 cijfers).',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     try {
-      console.log("Sponsor aanvraag:", { selectedPackage, formData });
+      console.log('Sponsor aanvraag:', { selectedPackage, formData });
 
       // Send email via SMTP
       const result = await sendSponsorEmail({
         ...formData,
-        selectedPackage: selectedPackage?.name || "",
+        selectedPackage: selectedPackage?.name || '',
       });
 
       if (result.success) {
         toast({
-          title: "Aanvraag ontvangen!",
+          title: 'Aanvraag ontvangen!',
           description: `Aanvraag voor ${selectedPackage?.name} pakket ontvangen! We nemen contact met je op.`,
         });
         onClose();
       } else {
-        throw new Error(result.error || "Failed to send email");
+        throw new Error(result.error || 'Failed to send email');
       }
     } catch (error) {
-      console.error("Sponsor form error:", error);
+      console.error('Sponsor form error:', error);
       toast({
-        title: "Fout bij verzenden",
-        description: "Er is iets misgegaan. Probeer het later opnieuw.",
-        variant: "destructive",
+        title: 'Fout bij verzenden',
+        description: 'Er is iets misgegaan. Probeer het later opnieuw.',
+        variant: 'destructive',
       });
     }
   };
@@ -95,7 +116,7 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
                 <Card
                   key={index}
                   className={`cursor-pointer transition-all hover:shadow-lg ${
-                    pkg.highlight ? "ring-2 ring-accent" : ""
+                    pkg.highlight ? 'ring-2 ring-accent' : ''
                   }`}
                   onClick={() => setSelectedPackage(pkg)}
                 >
@@ -177,7 +198,7 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
         </div>
 
         <div className="p-6">
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="companyName" className="font-medium">
@@ -187,7 +208,7 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
                   id="companyName"
                   required
                   value={formData.companyName}
-                  onChange={(e) =>
+                  onChange={e =>
                     setFormData({ ...formData, companyName: e.target.value })
                   }
                   placeholder="Jouw bedrijfsnaam"
@@ -202,7 +223,7 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
                   id="contactPerson"
                   required
                   value={formData.contactPerson}
-                  onChange={(e) =>
+                  onChange={e =>
                     setFormData({ ...formData, contactPerson: e.target.value })
                   }
                   placeholder="Jouw naam"
@@ -220,7 +241,7 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
                   type="email"
                   required
                   value={formData.email}
-                  onChange={(e) =>
+                  onChange={e =>
                     setFormData({ ...formData, email: e.target.value })
                   }
                   placeholder="contact@bedrijf.nl"
@@ -236,7 +257,7 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
                   type="tel"
                   required
                   value={formData.phone}
-                  onChange={(e) =>
+                  onChange={e =>
                     setFormData({ ...formData, phone: e.target.value })
                   }
                   placeholder="06-12345678"
@@ -251,7 +272,7 @@ const SponsorSelection = ({ packages, onClose }: SponsorSelectionProps) => {
               <Textarea
                 id="description"
                 value={formData.description}
-                onChange={(e) =>
+                onChange={e =>
                   setFormData({ ...formData, description: e.target.value })
                 }
                 placeholder="Vertel ons iets over je bedrijf of waarom je wilt sponsoren..."

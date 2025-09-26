@@ -1,73 +1,122 @@
-# Rugby Club de Scrumboks - Website
+# Scrumboks Home Field Website
 
-## Project info
+A modern, responsive website for Rugby Club de Scrumboks built with React, TypeScript, and Tailwind CSS.
 
-**URL**: https://lovable.dev/projects/edad2d0e-1f04-4598-ac6b-ebb0ffcfb589
+## Features
 
-## How can I edit this code?
+- 🏉 Modern rugby club website design
+- 📧 Contact form with email functionality
+- 🎯 Club van 50 membership form
+- 💰 Sponsorship inquiry form
+- 📱 Fully responsive design
+- ⚡ Fast loading with Vite
+- 🎨 Beautiful UI with shadcn/ui components
 
-There are several ways of editing your application.
+## Development Setup
 
-**Use Lovable**
+### Prerequisites
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/edad2d0e-1f04-4598-ac6b-ebb0ffcfb589) and start prompting.
+- Node.js (v18 or higher)
+- npm or yarn
 
-Changes made via Lovable will be committed automatically to this repo.
+### Installation
 
-**Use your preferred IDE**
+1. Clone the repository:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```bash
+git clone <repository-url>
+cd scrumboks-home-field
+```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+2. Install dependencies:
 
-Follow these steps:
+```bash
+npm install
+```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Running the Application
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+#### Option 1: Run both frontend and proxy server (Recommended)
 
-# Step 3: Install the necessary dependencies.
-npm i
+```bash
+npm run dev:full
+```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+This will start:
+
+- Frontend development server on http://localhost:5173
+- Proxy server on http://localhost:3001
+
+#### Option 2: Run services separately
+
+Terminal 1 - Start the proxy server:
+
+```bash
+npm run proxy
+```
+
+Terminal 2 - Start the frontend:
+
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Building for Production
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run build
+```
 
-**Use GitHub Codespaces**
+The built files will be in the `dist` directory.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Email Functionality
 
-## What technologies are used for this project?
+The website includes several forms that send emails:
 
-This project is built with:
+- **Contact Form**: Sends inquiries to `secretaris@scrumboks.nl`
+- **Club van 50**: Sends membership applications to `bestuur@scrumboks.nl`
+- **Sponsorship**: Sends sponsorship inquiries to `bestuur@scrumboks.nl`
+- **Proeftraining**: Sends trial training requests to `secretaris@scrumboks.nl`
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Email Service Architecture
 
-## How can I deploy this project?
+The email functionality uses:
 
-Simply open [Lovable](https://lovable.dev/projects/edad2d0e-1f04-4598-ac6b-ebb0ffcfb589) and click on Share -> Publish.
+1. **Frontend**: React forms that collect user data
+2. **Proxy Server**: Node.js/Express server that handles CORS and forwards requests
+3. **Google Apps Script**: Backend service that actually sends the emails
 
-## Can I connect a custom domain to my Lovable project?
+The proxy server is necessary because Google Apps Script doesn't support CORS headers, which would block direct requests from the browser.
 
-Yes, you can!
+## Project Structure
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```
+src/
+├── components/          # React components
+├── lib/                # Utility functions and services
+├── pages/              # Page components
+├── hooks/              # Custom React hooks
+└── assets/             # Static assets
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+proxy-server.js         # CORS proxy server
+```
+
+## Technologies Used
+
+- **Frontend**: React 18, TypeScript, Vite
+- **Styling**: Tailwind CSS, shadcn/ui
+- **Backend**: Node.js, Express
+- **Email**: Google Apps Script
+- **Deployment**: GitHub Pages
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+This project is proprietary to Rugby Club de Scrumboks.

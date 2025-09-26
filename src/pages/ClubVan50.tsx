@@ -1,50 +1,73 @@
-import { useState } from "react";
-import { Trophy, Award, Star, Users } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
-import { useScrollToTop } from "@/hooks/use-scroll-to-top";
-import { sendClub50Email } from "@/lib/email-service";
-import { useToast } from "@/hooks/use-toast";
+import { useState } from 'react';
+import { Trophy, Award, Star, Users } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
+import { useScrollToTop } from '@/hooks/use-scroll-to-top';
+import { sendClub50Email } from '@/lib/email-service';
+import { useToast } from '@/hooks/use-toast';
+import { isValidEmail, isValidPhone } from '@/lib/validation';
+import clubhouse from '@/assets/clubhouse.jpg';
+import benjaminsTeam from '@/assets/benjamins-team.jpeg';
 
 const ClubVan50 = () => {
   useScrollToTop(); // Scroll naar top bij laden van deze pagina
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
-    naam: "",
-    email: "",
-    telefoon: "",
-    extraTekst: "",
+    naam: '',
+    email: '',
+    telefoon: '',
+    extraTekst: '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Validate email
+    if (!isValidEmail(formData.email)) {
+      toast({
+        title: 'Ongeldig email adres',
+        description: 'Controleer je email adres en probeer opnieuw.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    // Validate phone if provided
+    if (formData.telefoon && !isValidPhone(formData.telefoon)) {
+      toast({
+        title: 'Ongeldig telefoonnummer',
+        description: 'Voer een geldig telefoonnummer in (minimaal 10 cijfers).',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     try {
-      console.log("Club van 50 form submitted:", formData);
+      console.log('Club van 50 form submitted:', formData);
 
       // Send email via SMTP
       const result = await sendClub50Email(formData);
 
       if (result.success) {
         toast({
-          title: "Aanmelding ontvangen!",
-          description: "We nemen contact met je op voor de details.",
+          title: 'Aanmelding ontvangen!',
+          description: 'We nemen contact met je op voor de details.',
         });
-        setFormData({ naam: "", email: "", telefoon: "", extraTekst: "" });
+        setFormData({ naam: '', email: '', telefoon: '', extraTekst: '' });
       } else {
-        throw new Error(result.error || "Failed to send email");
+        throw new Error(result.error || 'Failed to send email');
       }
     } catch (error) {
-      console.error("Club van 50 form error:", error);
+      console.error('Club van 50 form error:', error);
       toast({
-        title: "Fout bij verzenden",
-        description: "Er is iets misgegaan. Probeer het later opnieuw.",
-        variant: "destructive",
+        title: 'Fout bij verzenden',
+        description: 'Er is iets misgegaan. Probeer het later opnieuw.',
+        variant: 'destructive',
       });
     }
   };
@@ -52,23 +75,23 @@ const ClubVan50 = () => {
   const benefits = [
     {
       icon: Trophy,
-      title: "Jubileumversie",
-      description: "Deel van een unieke 50-jarige traditie",
+      title: 'Jubileumversie',
+      description: 'Deel van een unieke 50-jarige traditie',
     },
     {
       icon: Award,
-      title: "Vereeuwigd",
-      description: "Jouw naam op het exclusieve Club van 50 bord",
+      title: 'Vereeuwigd',
+      description: 'Jouw naam op het exclusieve Club van 50 bord',
     },
     {
       icon: Star,
-      title: "Certificaat",
-      description: "Persoonlijk jubileumcertificaat",
+      title: 'Certificaat',
+      description: 'Persoonlijk jubileumcertificaat',
     },
     {
       icon: Users,
-      title: "VIP Access",
-      description: "Exclusieve toegang tot speciale activiteiten",
+      title: 'VIP Access',
+      description: 'Exclusieve toegang tot speciale activiteiten',
     },
   ];
 
@@ -137,8 +160,13 @@ const ClubVan50 = () => {
       </section>
 
       {/* Form Section */}
-      <section className="py-20 section-navy">
-        <div className="container mx-auto px-6">
+      <section className="py-20 section-navy relative overflow-hidden">
+        {/* Subtle decorative background */}
+        <div
+          className="absolute inset-0 opacity-5 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${benjaminsTeam})` }}
+        ></div>
+        <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-heading font-bold text-white mb-6">
@@ -152,7 +180,7 @@ const ClubVan50 = () => {
 
             <Card className="bg-white/10 backdrop-blur-sm border-white/20">
               <CardContent className="p-8">
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                   <div className="space-y-2">
                     <Label htmlFor="naam" className="text-white font-medium">
                       Naam *
@@ -162,7 +190,7 @@ const ClubVan50 = () => {
                       type="text"
                       required
                       value={formData.naam}
-                      onChange={(e) =>
+                      onChange={e =>
                         setFormData({ ...formData, naam: e.target.value })
                       }
                       className="bg-white/20 border-white/30 text-white placeholder:text-white/60"
@@ -179,7 +207,7 @@ const ClubVan50 = () => {
                       type="email"
                       required
                       value={formData.email}
-                      onChange={(e) =>
+                      onChange={e =>
                         setFormData({ ...formData, email: e.target.value })
                       }
                       className="bg-white/20 border-white/30 text-white placeholder:text-white/60"
@@ -199,7 +227,7 @@ const ClubVan50 = () => {
                       type="tel"
                       required
                       value={formData.telefoon}
-                      onChange={(e) =>
+                      onChange={e =>
                         setFormData({ ...formData, telefoon: e.target.value })
                       }
                       className="bg-white/20 border-white/30 text-white placeholder:text-white/60"
@@ -218,7 +246,7 @@ const ClubVan50 = () => {
                       id="extraTekst"
                       type="text"
                       value={formData.extraTekst}
-                      onChange={(e) =>
+                      onChange={e =>
                         setFormData({
                           ...formData,
                           extraTekst: e.target.value,

@@ -1,17 +1,96 @@
-// Email service using EmailJS (client-side)
+// Email service using Google Apps Script via proxy server
 // Sends emails via forms@scrumboks.nl
 
-import emailjs from '@emailjs/browser';
+// Proxy server URL (handles CORS)
+const PROXY_URL = import.meta.env.DEV
+  ? 'http://localhost:3005/api/email'
+  : '/api/email';
 
-// EmailJS Configuration
-const EMAILJS_CONFIG = {
-  serviceId: 'service_scrumboks', // We'll need to set this up
-  templateId: 'template_scrumboks', // We'll need to set this up
-  publicKey: 'your_public_key', // We'll need to set this up
+// File upload URL
+const UPLOAD_URL = import.meta.env.DEV
+  ? 'http://localhost:3005/api/upload'
+  : '/api/upload';
+
+// Upload file and get temporary URL
+const uploadFile = async (file: File): Promise<{ 
+  fileUrl: string; 
+  fileId: string;
+  optimizedUrl?: string;
+  thumbnailUrl?: string;
+} | null> => {
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch(UPLOAD_URL, {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Upload failed with status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    
+    if (result.success) {
+      return {
+        fileUrl: result.fileUrl,
+        fileId: result.fileId,
+        optimizedUrl: result.optimizedUrl,
+        thumbnailUrl: result.thumbnailUrl,
+      };
+    } else {
+      throw new Error(result.error || 'Upload failed');
+    }
+  } catch (error) {
+    console.error('Error uploading file:', error);
+    return null;
+  }
 };
 
-// Initialize EmailJS
-emailjs.init(EMAILJS_CONFIG.publicKey);
+// Convert file to base64 (fallback for non-photo uploads)
+const convertFileToBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const result = reader.result as string;
+      // Remove the data:image/jpeg;base64, prefix
+      const base64 = result.split(',')[1];
+      resolve(base64);
+    };
+    reader.onerror = error => reject(error);
+  });
+};
+
+// Email Configuration - Pas deze aan om emails te sturen naar andere adressen
+const EMAIL_CONFIG = {
+  contact: {
+    to: 'secretaris@scrumboks.nl', // Contact formulier
+    subject: 'Nieuw Contact Bericht',
+  },
+  club50: {
+    to: 'bestuur@scrumboks.nl', // Club van 50 formulier
+    subject: 'Nieuwe Club van 50 Aanmelding',
+  },
+  sponsor: {
+    to: 'bestuur@scrumboks.nl', // Sponsor formulier
+    subject: 'Nieuwe Sponsor Aanvraag',
+  },
+  proeftraining: {
+    to: 'secretaris@scrumboks.nl', // Proeftraining formulier
+    subject: 'Nieuwe Proeftraining Aanvraag',
+  },
+  wordLidIncomplete: {
+    to: 'forms@scrumboks.nl', // Incomplete Word Lid aanmelding (test)
+    subject: 'Incomplete Word Lid Aanmelding',
+  },
+  wordLidComplete: {
+    to: 'forms@scrumboks.nl', // Complete Word Lid aanmelding (test)
+    subject: 'Nieuwe Word Lid Aanmelding',
+  },
+};
 
 // Email templates
 export const generateContactEmailHTML = (data: {
@@ -38,7 +117,7 @@ export const generateContactEmailHTML = (data: {
           ${
             data.phone
               ? `<p style="margin: 8px 0;"><strong>Telefoon:</strong> <a href="tel:${data.phone}" style="color: #1e40af;">${data.phone}</a></p>`
-              : ""
+              : ''
           }
           <p style="margin: 8px 0;"><strong>Onderwerp:</strong> ${
             data.subject
@@ -88,7 +167,7 @@ export const generateClub50EmailHTML = (data: {
           ${
             data.telefoon
               ? `<p style="margin: 8px 0;"><strong>Telefoon:</strong> <a href="tel:${data.telefoon}" style="color: #1e40af;">${data.telefoon}</a></p>`
-              : ""
+              : ''
           }
         </div>
         
@@ -100,7 +179,7 @@ export const generateClub50EmailHTML = (data: {
           <p style="margin: 0; white-space: pre-wrap;">${data.extraTekst}</p>
         </div>
         `
-            : ""
+            : ''
         }
         
         <div style="background: #d1fae5; padding: 20px; border-radius: 8px; margin: 20px 0;">
@@ -153,7 +232,7 @@ export const generateSponsorEmailHTML = (data: {
           ${
             data.phone
               ? `<p style="margin: 8px 0;"><strong>Telefoon:</strong> <a href="tel:${data.phone}" style="color: #1e40af;">${data.phone}</a></p>`
-              : ""
+              : ''
           }
         </div>
         
@@ -172,7 +251,7 @@ export const generateSponsorEmailHTML = (data: {
           <p style="margin: 0; white-space: pre-wrap;">${data.description}</p>
         </div>
         `
-            : ""
+            : ''
         }
         
         <div style="background: #d1fae5; padding: 20px; border-radius: 8px; margin: 20px 0;">
@@ -201,22 +280,36 @@ export const sendContactEmail = async (data: {
   message: string;
 }) => {
   try {
-    // For now, simulate email sending until EmailJS is configured
-    console.log("Contact email would be sent:", {
-      to: "info@scrumboks.nl",
-      subject: `Contact: ${data.subject} - ${data.name}`,
-      data: data
+    // Use GET request with URL parameters to avoid CORS
+    // Add fields in the order they appear in the form
+    const params = new URLSearchParams();
+    params.append('type', 'contact');
+    params.append('name', data.name);
+    params.append('email', data.email);
+    params.append('phone', data.phone || '');
+    params.append('subject', data.subject);
+    params.append('message', data.message);
+    params.append('to', EMAIL_CONFIG.contact.to);
+    params.append('emailSubject', EMAIL_CONFIG.contact.subject);
+
+    const response = await fetch(`${PROXY_URL}?${params.toString()}`, {
+      method: 'GET',
     });
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    if (!response.ok) {
+      throw new Error(`Proxy server responded with status: ${response.status}`);
+    }
 
-    return { success: true, messageId: "simulated_" + Date.now() };
+    const result = await response.json();
+    return {
+      success: result.success,
+      messageId: result.messageId || 'sent_' + Date.now(),
+    };
   } catch (error) {
-    console.error("Error sending contact email:", error);
+    console.error('Error sending contact email:', error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : "Unknown error",
+      error: error instanceof Error ? error.message : 'Unknown error',
     };
   }
 };
@@ -228,22 +321,35 @@ export const sendClub50Email = async (data: {
   extraTekst?: string;
 }) => {
   try {
-    // For now, simulate email sending until EmailJS is configured
-    console.log("Club van 50 email would be sent:", {
-      to: "sponsorzaken@scrumboks.nl",
-      subject: `Club van 50 Aanmelding - ${data.naam}`,
-      data: data
+    // Use GET request with URL parameters to avoid CORS
+    // Add fields in the order they appear in the form
+    const params = new URLSearchParams();
+    params.append('type', 'club50');
+    params.append('naam', data.naam);
+    params.append('email', data.email);
+    params.append('telefoon', data.telefoon || '');
+    params.append('extraTekst', data.extraTekst || '');
+    params.append('to', EMAIL_CONFIG.club50.to);
+    params.append('emailSubject', EMAIL_CONFIG.club50.subject);
+
+    const response = await fetch(`${PROXY_URL}?${params.toString()}`, {
+      method: 'GET',
     });
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    if (!response.ok) {
+      throw new Error(`Proxy server responded with status: ${response.status}`);
+    }
 
-    return { success: true, messageId: "simulated_" + Date.now() };
+    const result = await response.json();
+    return {
+      success: result.success,
+      messageId: result.messageId || 'sent_' + Date.now(),
+    };
   } catch (error) {
-    console.error("Error sending Club van 50 email:", error);
+    console.error('Error sending Club van 50 email:', error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : "Unknown error",
+      error: error instanceof Error ? error.message : 'Unknown error',
     };
   }
 };
@@ -257,22 +363,240 @@ export const sendSponsorEmail = async (data: {
   selectedPackage: string;
 }) => {
   try {
-    // For now, simulate email sending until EmailJS is configured
-    console.log("Sponsor email would be sent:", {
-      to: "sponsorzaken@scrumboks.nl",
-      subject: `Sponsor Aanvraag - ${data.companyName} (${data.selectedPackage})`,
-      data: data
+    // Use GET request with URL parameters to avoid CORS
+    // Add fields in the order they appear in the form
+    const params = new URLSearchParams();
+    params.append('type', 'sponsor');
+    params.append('companyName', data.companyName);
+    params.append('contactPerson', data.contactPerson);
+    params.append('email', data.email);
+    params.append('phone', data.phone || '');
+    params.append('description', data.description || '');
+    params.append('package', data.selectedPackage);
+    params.append('to', EMAIL_CONFIG.sponsor.to);
+    params.append('emailSubject', EMAIL_CONFIG.sponsor.subject);
+
+    const response = await fetch(`${PROXY_URL}?${params.toString()}`, {
+      method: 'GET',
     });
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    if (!response.ok) {
+      throw new Error(`Proxy server responded with status: ${response.status}`);
+    }
 
-    return { success: true, messageId: "simulated_" + Date.now() };
+    const result = await response.json();
+    return {
+      success: result.success,
+      messageId: result.messageId || 'sent_' + Date.now(),
+    };
   } catch (error) {
-    console.error("Error sending sponsor email:", error);
+    console.error('Error sending sponsor email:', error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : "Unknown error",
+      error: error instanceof Error ? error.message : 'Unknown error',
+    };
+  }
+};
+
+export const sendProeftrainingEmail = async (data: {
+  naam: string;
+  telefoon: string;
+  email?: string;
+  leeftijd: string;
+}) => {
+  try {
+    // Use GET request with URL parameters to avoid CORS
+    // Add fields in the order they appear in the form
+    const params = new URLSearchParams();
+    params.append('type', 'proeftraining');
+    params.append('naam', data.naam);
+    params.append('telefoon', data.telefoon);
+    params.append('email', data.email || '');
+    params.append('leeftijd', data.leeftijd);
+    params.append('to', EMAIL_CONFIG.proeftraining.to);
+    params.append('emailSubject', EMAIL_CONFIG.proeftraining.subject);
+
+    const response = await fetch(`${PROXY_URL}?${params.toString()}`, {
+      method: 'GET',
+    });
+
+    if (!response.ok) {
+      throw new Error(`Proxy server responded with status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    return {
+      success: result.success,
+      messageId: result.messageId || 'sent_' + Date.now(),
+    };
+  } catch (error) {
+    console.error('Error sending proeftraining email:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error',
+    };
+  }
+};
+
+export const sendWordLidIncompleteEmail = async (data: {
+  currentStep: number;
+  voornaam: string;
+  achternaam: string;
+  email: string;
+  mobiel: string;
+  [key: string]: any;
+}) => {
+  try {
+    const params = new URLSearchParams();
+    params.append('type', 'wordLidIncomplete');
+    params.append('currentStep', data.currentStep.toString());
+    params.append('voornaam', data.voornaam);
+    params.append('achternaam', data.achternaam);
+    params.append('email', data.email);
+    params.append('mobiel', data.mobiel);
+
+    // Upload file and get URL if present
+    if (data.pasfoto && data.pasfoto instanceof File) {
+      try {
+        const uploadResult = await uploadFile(data.pasfoto);
+        if (uploadResult) {
+          // Use the original parameter names that Google Apps Script expects
+          params.append('pasfoto_base64', uploadResult.fileUrl); // Keep original name for compatibility
+          params.append('pasfoto_name', data.pasfoto.name);
+          params.append('pasfoto_type', data.pasfoto.type);
+          // Add additional info for Google Apps Script
+          params.append('pasfoto_info', `Foto geüpload naar Cloudinary: ${uploadResult.fileUrl}`);
+        } else {
+          // Fallback: send file info without data
+          params.append(
+            'pasfoto_info',
+            `Pasfoto geüpload: ${data.pasfoto.name} (${Math.round(
+              data.pasfoto.size / 1024
+            )}KB) - Kon niet uploaden`
+          );
+        }
+      } catch (error) {
+        console.error('Error uploading file:', error);
+        // Fallback: send file info without data
+        params.append(
+          'pasfoto_info',
+          `Pasfoto geüpload: ${data.pasfoto.name} (${Math.round(
+            data.pasfoto.size / 1024
+          )}KB) - Upload gefaald`
+        );
+      }
+    }
+
+    // Add all other fields that have values
+    Object.keys(data).forEach(key => {
+      if (
+        key !== 'currentStep' &&
+        key !== 'voornaam' &&
+        key !== 'achternaam' &&
+        key !== 'email' &&
+        key !== 'mobiel' &&
+        key !== 'pasfoto' &&
+        data[key]
+      ) {
+        params.append(key, data[key].toString());
+      }
+    });
+
+    params.append('to', EMAIL_CONFIG.wordLidIncomplete.to);
+    params.append('emailSubject', EMAIL_CONFIG.wordLidIncomplete.subject);
+
+    console.log('Sending incomplete word lid email:', data);
+
+    const response = await fetch(`${PROXY_URL}?${params.toString()}`, {
+      method: 'GET',
+    });
+
+    if (!response.ok) {
+      throw new Error(`Proxy server responded with status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    return {
+      success: result.success,
+      messageId: result.messageId || 'sent_' + Date.now(),
+    };
+  } catch (error) {
+    console.error('Error sending incomplete word lid email:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error',
+    };
+  }
+};
+
+export const sendWordLidCompleteEmail = async (data: {
+  [key: string]: any;
+}) => {
+  try {
+    const formData = new FormData();
+    formData.append('type', 'wordLidComplete');
+
+    // Upload file and get URL if present
+    if (data.pasfoto && data.pasfoto instanceof File) {
+      try {
+        const uploadResult = await uploadFile(data.pasfoto);
+        if (uploadResult) {
+          // Use the original parameter names that Google Apps Script expects
+          formData.append('pasfoto_base64', uploadResult.fileUrl); // Keep original name for compatibility
+          formData.append('pasfoto_name', data.pasfoto.name);
+          formData.append('pasfoto_type', data.pasfoto.type);
+          // Add additional info for Google Apps Script
+          formData.append('pasfoto_info', `Foto geüpload naar Cloudinary: ${uploadResult.fileUrl}`);
+        } else {
+          // Fallback: send file info without data
+          formData.append(
+            'pasfoto_info',
+            `Pasfoto geüpload: ${data.pasfoto.name} (${Math.round(
+              data.pasfoto.size / 1024
+            )}KB) - Kon niet uploaden`
+          );
+        }
+      } catch (error) {
+        console.error('Error uploading file:', error);
+        // Fallback: send file info without data
+        formData.append(
+          'pasfoto_info',
+          `Pasfoto geüpload: ${data.pasfoto.name} (${Math.round(
+            data.pasfoto.size / 1024
+          )}KB) - Upload gefaald`
+        );
+      }
+    }
+
+    // Add all other fields that have values
+    Object.keys(data).forEach(key => {
+      if (data[key] && key !== 'pasfoto') {
+        formData.append(key, data[key].toString());
+      }
+    });
+
+    formData.append('to', EMAIL_CONFIG.wordLidComplete.to);
+    formData.append('emailSubject', EMAIL_CONFIG.wordLidComplete.subject);
+
+    const response = await fetch(PROXY_URL, {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Proxy server responded with status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    return {
+      success: result.success,
+      messageId: result.messageId || 'sent_' + Date.now(),
+    };
+  } catch (error) {
+    console.error('Error sending complete word lid email:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error',
     };
   }
 };

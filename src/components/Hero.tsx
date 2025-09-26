@@ -1,10 +1,17 @@
-import { Button } from "@/components/ui/button";
-import rugbyHero from "@/assets/rugby-hero.jpg";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import rugbyHero from '@/assets/rugby-hero.jpg';
+import logo from '@/assets/RC_De_Scrumboks (1).png';
+import ProeftrainingModal from './ProeftrainingModal';
+import WordLidModal from './WordLidModal';
 
 const Hero = () => {
+  const [showProeftrainingModal, setShowProeftrainingModal] = useState(false);
+  const [showWordLidModal, setShowWordLidModal] = useState(false);
+
   // Force cache refresh - updated for GitHub Pages deployment
   const scrollToContact = () => {
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -14,8 +21,8 @@ const Hero = () => {
         className="absolute inset-0 bg-cover bg-no-repeat parallax-hero"
         style={{
           backgroundImage: `url(${rugbyHero})`,
-          backgroundPosition: "38% center",
-          backgroundSize: "cover",
+          backgroundPosition: '38% center',
+          backgroundSize: 'cover',
         }}
       >
         <div className="absolute inset-0 bg-primary-navy/70"></div>
@@ -47,7 +54,7 @@ const Hero = () => {
             variant="default"
             size="lg"
             className="bg-accent hover:bg-accent-warm text-accent-foreground font-semibold px-8 py-4 text-lg hover-lift"
-            onClick={scrollToContact}
+            onClick={() => setShowWordLidModal(true)}
           >
             Word Lid
           </Button>
@@ -55,7 +62,7 @@ const Hero = () => {
             variant="default"
             size="lg"
             className="bg-accent hover:bg-accent-warm text-accent-foreground font-semibold px-8 py-4 text-lg hover-lift"
-            onClick={scrollToContact}
+            onClick={() => setShowProeftrainingModal(true)}
           >
             Plan een Proeftraining
           </Button>
@@ -74,6 +81,16 @@ const Hero = () => {
           <div className="w-1 h-3 bg-white/50 rounded-full mt-2"></div>
         </div>
       </div>
+
+      {/* Proeftraining Modal */}
+      {showProeftrainingModal && (
+        <ProeftrainingModal onClose={() => setShowProeftrainingModal(false)} />
+      )}
+
+      {/* Word Lid Modal */}
+      {showWordLidModal && (
+        <WordLidModal onClose={() => setShowWordLidModal(false)} />
+      )}
     </section>
   );
 };
