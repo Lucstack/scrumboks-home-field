@@ -82,7 +82,7 @@ const Contact = ({ id }: { id?: string }) => {
   ];
 
   return (
-    <section id={id || "contact"} className="py-20 section-navy">
+    <section id={id || 'contact'} className="py-20 section-navy">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <div className="inline-block px-4 py-2 bg-accent/20 rounded-full border border-accent/30 mb-6">
