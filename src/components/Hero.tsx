@@ -1,17 +1,22 @@
-import { Button } from '@/components/ui/button';
-import rugbyHero from '@/assets/rugby-hero.jpg';
+import { Button } from "@/components/ui/button";
+import rugbyHero from "@/assets/rugby-hero.jpg";
 
 const Hero = () => {
+  // Force cache refresh - updated for GitHub Pages deployment
   const scrollToContact = () => {
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image with Parallax */}
       <div
-        className="absolute inset-0 bg-cover bg-right bg-no-repeat parallax-hero"
-        style={{ backgroundImage: `url(${rugbyHero})` }}
+        className="absolute inset-0 bg-cover bg-no-repeat parallax-hero"
+        style={{
+          backgroundImage: `url(${rugbyHero})`,
+          backgroundPosition: "38% center",
+          backgroundSize: "cover",
+        }}
       >
         <div className="absolute inset-0 bg-primary-navy/70"></div>
       </div>

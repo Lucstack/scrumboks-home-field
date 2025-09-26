@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,8 +7,6 @@
 /* Scrumboks Rugby Club Design System
 All colors MUST be HSL. Navy blues with warm golden accents.
 */
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
@@ -19,7 +19,7 @@ All colors MUST be HSL. Navy blues with warm golden accents.
     --primary-foreground: 0 0% 98%;
     --primary-navy: 220 45% 12%;
     --primary-navy-light: 215 35% 25%;
-    
+
     /* Golden Yellow Accents */
     --accent: 45 95% 65%;
     --accent-warm: 42 85% 55%;
@@ -29,7 +29,7 @@ All colors MUST be HSL. Navy blues with warm golden accents.
     /* Rugby Heritage Colors */
     --heritage: 215 35% 25%;
     --heritage-foreground: 0 0% 95%;
-    
+
     /* Cards & Surfaces */
     --card: 0 0% 100%;
     --card-foreground: 215 25% 15%;
@@ -51,14 +51,22 @@ All colors MUST be HSL. Navy blues with warm golden accents.
     --border: 220 13% 91%;
     --input: 220 13% 91%;
     --ring: 45 95% 65%;
-    
+
     /* Rugby-specific Colors */
     --rugby-field: 120 40% 25%;
     --rugby-field-light: 120 30% 35%;
-    
+
     /* Gradients & Special Effects */
-    --gradient-navy: linear-gradient(135deg, hsl(var(--primary-navy)), hsl(var(--heritage)));
-    --gradient-warm: linear-gradient(135deg, hsl(var(--accent-warm)), hsl(var(--accent)));
+    --gradient-navy: linear-gradient(
+      135deg,
+      hsl(var(--primary-navy)),
+      hsl(var(--heritage))
+    );
+    --gradient-warm: linear-gradient(
+      135deg,
+      hsl(var(--accent-warm)),
+      hsl(var(--accent))
+    );
     --shadow-rugby: 0 10px 30px -10px hsl(var(--primary-navy) / 0.3);
     --shadow-warm: 0 5px 20px -5px hsl(var(--accent) / 0.2);
 
@@ -94,7 +102,7 @@ All colors MUST be HSL. Navy blues with warm golden accents.
 
     --primary: 45 95% 65%;
     --primary-foreground: 215 45% 8%;
-    
+
     --heritage: 215 25% 20%;
     --heritage-foreground: 0 0% 90%;
 
@@ -131,11 +139,17 @@ All colors MUST be HSL. Navy blues with warm golden accents.
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Roboto Slab', Georgia, serif;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Roboto Slab", Georgia, serif;
     font-weight: 600;
   }
 
@@ -143,29 +157,29 @@ All colors MUST be HSL. Navy blues with warm golden accents.
   .section-navy {
     @apply bg-heritage text-heritage-foreground;
   }
-  
+
   .section-warm {
     @apply bg-card-warm text-foreground;
   }
-  
+
   .text-rugby-tradition {
     @apply text-accent-gold font-semibold;
   }
-  
+
   .shadow-rugby {
     box-shadow: var(--shadow-rugby);
   }
-  
+
   .shadow-warm {
     box-shadow: var(--shadow-warm);
   }
-  
+
   /* Parallax and smooth animations */
   .parallax-hero {
     transform: translateZ(0);
     will-change: transform;
   }
-  
+
   .hover-lift {
     @apply transition-all duration-300 hover:translate-y-[-4px] hover:shadow-rugby;
   }

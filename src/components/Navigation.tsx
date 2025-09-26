@@ -1,17 +1,18 @@
-import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const controlNavbar = () => {
-      if (typeof window !== 'undefined') {
+      if (typeof window !== "undefined") {
         if (window.scrollY > lastScrollY && window.scrollY > 100) {
           setIsVisible(false);
         } else {
@@ -21,25 +22,61 @@ const Navigation = () => {
       }
     };
 
-    if (typeof window !== 'undefined') {
-      window.addEventListener('scroll', controlNavbar);
-      return () => window.removeEventListener('scroll', controlNavbar);
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", controlNavbar);
+      return () => window.removeEventListener("scroll", controlNavbar);
     }
   }, [lastScrollY]);
 
   const menuItems = [
-    { name: 'Teams', href: '/#teams' },
-    { name: 'Contact', href: '/#contact' },
-    { name: 'Club van 50', href: '/club-van-50' },
-    { name: 'Sponsoren', href: '/sponsoren' },
+    { name: "Home", href: "/" },
+    { name: "Teams", href: "/#teams" },
+    { name: "Contact", href: "/#contact" },
+    { name: "Club van 50", href: "/club-van-50" },
+    { name: "Sponsoren", href: "/sponsoren" },
   ];
 
   const scrollToSection = (href: string) => {
-    if (href.startsWith('/#')) {
+    if (href === "/") {
+      // Home button clicked
+      const isHomepage =
+        location.pathname === "/" ||
+        location.pathname === "/scrumboks-home-field/" ||
+        location.pathname.endsWith("/scrumboks-home-field");
+
+      if (isHomepage) {
+        // On homepage: scroll to top
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        // On other pages: navigate to homepage
+        navigate("/");
+      }
+    } else if (href.startsWith("/#")) {
       const sectionId = href.substring(2);
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+
+      // Check if we're on the homepage (account for Vite base path)
+      const isHomepage =
+        location.pathname === "/" ||
+        location.pathname === "/scrumboks-home-field/" ||
+        location.pathname.endsWith("/scrumboks-home-field");
+
+      if (isHomepage) {
+        // On homepage: smooth scroll to section
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        } else {
+          // Element not found, try after a short delay
+          setTimeout(() => {
+            const delayedElement = document.getElementById(sectionId);
+            if (delayedElement) {
+              delayedElement.scrollIntoView({ behavior: "smooth" });
+            }
+          }, 100);
+        }
+      } else {
+        // On other pages: navigate to homepage with hash
+        navigate(`/#${sectionId}`);
       }
     }
     setIsOpen(false);
@@ -50,7 +87,7 @@ const Navigation = () => {
       {/* Desktop Menu */}
       <nav
         className={`fixed top-6 right-6 z-50 transition-all duration-300 ${
-          isVisible ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0'
+          isVisible ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0"
         }`}
       >
         <Button
@@ -67,7 +104,7 @@ const Navigation = () => {
           <div className="absolute top-full right-0 mt-2 w-48 bg-white/95 backdrop-blur-md rounded-xl border border-white/20 shadow-rugby overflow-hidden">
             {menuItems.map((item) => (
               <div key={item.name}>
-                {item.href.startsWith('/#') ? (
+                {item.href === "/" || item.href.startsWith("/#") ? (
                   <button
                     onClick={() => scrollToSection(item.href)}
                     className="w-full px-4 py-3 text-left font-medium text-primary-navy hover:bg-accent/10 transition-colors"
@@ -107,7 +144,7 @@ const Navigation = () => {
             <div className="flex flex-col items-center justify-center h-full space-y-8 -mt-20">
               {menuItems.map((item) => (
                 <div key={item.name}>
-                  {item.href.startsWith('/#') ? (
+                  {item.href === "/" || item.href.startsWith("/#") ? (
                     <button
                       onClick={() => scrollToSection(item.href)}
                       className="text-2xl font-heading font-bold text-white hover:text-accent transition-colors"

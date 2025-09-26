@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   MapPin,
   Mail,
@@ -7,38 +7,63 @@ import {
   Facebook,
   Instagram,
   Twitter,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent } from '@/components/ui/card';
-import { useToast } from '@/hooks/use-toast';
-import clubhouseInterior from '@/assets/clubhouse-interior.jpg';
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
+import { sendContactEmail } from "@/lib/email-service";
+import clubhouseInterior from "@/assets/clubhouse-interior.jpg";
 
 const Contact = ({ id }: { id?: string }) => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: '',
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
   });
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    toast({
-      title: 'Bericht verzonden!',
-      description: 'We nemen zo snel mogelijk contact met je op.',
-    });
-    setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+
+    try {
+      console.log("Contact form submitted:", formData);
+
+      // Send email via SMTP
+      const result = await sendContactEmail(formData);
+
+      if (result.success) {
+        toast({
+          title: "Bericht verzonden!",
+          description: "We nemen zo snel mogelijk contact met je op.",
+        });
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        throw new Error(result.error || "Failed to send email");
+      }
+    } catch (error) {
+      console.error("Contact form error:", error);
+      toast({
+        title: "Fout bij verzenden",
+        description: "Er is iets misgegaan. Probeer het later opnieuw.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -47,38 +72,38 @@ const Contact = ({ id }: { id?: string }) => {
   const contactInfo = [
     {
       icon: MapPin,
-      title: 'Adres',
-      details: ['Beethovenstraat 18a', '4003 KX Tiel'],
+      title: "Adres",
+      details: ["Beethovenstraat 18a", "4003 KX Tiel"],
     },
     {
       icon: Mail,
-      title: 'E-mail',
-      details: ['info@scrumboks.nl'],
+      title: "E-mail",
+      details: ["info@scrumboks.nl"],
     },
     {
       icon: Phone,
-      title: 'Telefoon Clubhuis',
-      details: ['0344 623201'],
+      title: "Telefoon Clubhuis",
+      details: ["0344 623201"],
     },
     {
       icon: Clock,
-      title: 'Trainingstijden',
-      details: ['Di & Do 18:45 - 20:30', 'Vr 20:00 - 22:00'],
+      title: "Trainingstijden",
+      details: ["Di & Do 18:45 - 20:30", "Vr 20:00 - 22:00"],
     },
   ];
 
   const socialLinks = [
     {
       icon: Facebook,
-      href: 'https://www.facebook.com/Scrumboks/',
-      label: 'Facebook',
+      href: "https://www.facebook.com/Scrumboks/",
+      label: "Facebook",
     },
     {
       icon: Instagram,
-      href: 'https://www.instagram.com/scrumboks_rugby/',
-      label: 'Instagram',
+      href: "https://www.instagram.com/scrumboks_rugby/",
+      label: "Instagram",
     },
-    { icon: Twitter, href: 'https://x.com/scrumboks', label: 'Twitter' },
+    { icon: Twitter, href: "https://x.com/scrumboks", label: "Twitter" },
   ];
 
   return (

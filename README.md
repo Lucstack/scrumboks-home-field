@@ -1,4 +1,4 @@
-# Welcome to your Lovable project
+# Rugby Club de Scrumboks - Website
 
 ## Project info
 
